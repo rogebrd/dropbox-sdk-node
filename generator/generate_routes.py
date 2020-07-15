@@ -56,10 +56,16 @@ def main():
         os.path.join(os.path.dirname(sys.argv[0]), '../src'))
     if verbose:
         print('Dropbox package path: %s' % dropbox_pkg_path)
+
     typescript_template_path = os.path.abspath(
         os.path.join(os.path.dirname(sys.argv[0]), 'typescript'))
     if verbose:
         print('TypeScript template path: %s' % typescript_template_path)
+
+    types_template_path = os.path.abspath(
+        os.path.join(os.path.dirname(sys.argv[0]), '../types'))
+    if verbose:
+        print('Types template path: %s' % types_template_path)
 
     upload_arg = {
         "match": ["style", "upload"],
@@ -115,6 +121,20 @@ def main():
          specs + ['-w', 'team', '-f', 'style!="upload" and style!="download"'] +
          ['-a', 'host', '-a', 'style'] + ['--', 'dropbox_team.d.tstemplate', 'dropbox_team.d.ts']),
         cwd=stone_path)
+
+    typescript_generated_files = glob.glob('typescript/*.d.ts')
+    typescript_generated_files.sort()
+    typescript_generated_files = [os.path.join(os.getcwd(), f) for f in typescript_generated_files]
+    if verbose:
+        print('TypeScript generated files: %s' % typescript_generated_files)
+
+    if verbose:
+        print('Moving TSD routes and types to types/')
+    for file in typescript_generated_files:
+        subprocess.check_output(
+            (['mv', file , types_template_path]),
+            cwd=typescript_template_path
+        )
 
 if __name__ == '__main__':
     main()

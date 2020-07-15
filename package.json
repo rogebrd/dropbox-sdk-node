@@ -4,8 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsc",
+    "lint": "eslint --ext .js,.jsx,.ts .",
+    "report-mocha": "nyc mocha test/*.js",
+    "mocha": "mocha test/*.js",
+    "test": "npm lint && npm report-mocha",
+    "report": "nyc -r test -r lcov report"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "mocha": "^8.0.1",
+    "nyc": "^15.1.0",
+    "typescript": "^3.9.6"
+  }
 }
