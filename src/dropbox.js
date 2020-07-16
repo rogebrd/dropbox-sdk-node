@@ -9,7 +9,6 @@ import { DropboxAuth } from './auth';
  * @classdesc The Dropbox SDK class that provides methods to read, write and
  * create files or folders in a user or team's Dropbox.
  * @arg {Object} options
- * @arg {Function} [options.fetch] - fetch library for making requests.
  * @arg {String} [options.accessToken] - An access token for making authenticated
  * requests.
  * @arg {String} [options.clientId] - The client id for your app. Used to create
@@ -31,14 +30,13 @@ export default class Dropbox {
     this.auth = DropboxAuth(options);
     this.selectUser = options.selectUser;
     this.selectAdmin = options.selectAdmin;
-    this.fetch = options.fetch || fetch;
     this.pathRoot = options.pathRoot;
 
     Object.assign(this, routes);
     Object.assign(this, teamRoutes);
   }
 
-  // What about sharing route that was defined here?
+  // TODO: What about sharing route that was defined here?
 
   request(path, args, auth, host, style) {
     let request = null;

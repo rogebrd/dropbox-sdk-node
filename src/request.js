@@ -1,4 +1,10 @@
 import { getBaseURL, httpHeaderSafeJson } from './utils';
+import {
+  APP_AUTH,
+  TEAM_AUTH,
+  USER_AUTH,
+  NO_AUTH,
+} from './constants';
 
 function parseBodyToType(res) {
   const clone = res.clone();
@@ -39,7 +45,7 @@ export function downloadRequest(fetch) {
   return function downloadRequestWithFetch(path, args, auth, host, client, options) {
     return client.checkAndRefreshAccessToken()
       .then(() => {
-        if (auth !== 'user') {
+        if (auth !== USER_AUTH) {
           throw new Error(`Unexpected auth type: ${auth}`);
         }
 
@@ -75,7 +81,7 @@ export function uploadRequest(fetch) {
   return function uploadRequestWithFetch(path, args, auth, host, client, options) {
     return client.checkAndRefreshAccessToken()
       .then(() => {
-        if (auth !== 'user') {
+        if (auth !== USER_AUTH) {
           throw new Error(`Unexpected auth type: ${auth}`);
         }
 
@@ -139,18 +145,18 @@ export function rpcRequest(fetch) {
         let authHeader = '';
 
         switch (auth) {
-          case 'app':
+          case APP_AUTH:
             if (!options.clientId || !options.clientSecret) {
               throw new Error('A client id and secret is required for this function');
             }
             authHeader = Buffer.from(`${options.clientId}:${options.clientSecret}`).toString('base64');
             headers.Authorization = `Basic ${authHeader}`;
             break;
-          case 'team':
-          case 'user':
+          case TEAM_AUTH:
+          case USER_AUTH:
             headers.Authorization = `Bearer ${client.getAccessToken()}`;
             break;
-          case 'noauth':
+          case NO_AUTH:
             break;
           default:
             throw new Error(`Unhandled auth type: ${auth}`);
