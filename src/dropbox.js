@@ -1,6 +1,8 @@
+import { UPLOAD, DOWNLOAD, RPC } from './constants';
 import { routes } from '../lib/routes';
 import { routes as teamRoutes } from '../lib/routes-team';
 import { rpcRequest, downloadRequest, uploadRequest} from './request';
+import { DropboxAuth } from './auth';
 
 /**
  * @class Dropbox
@@ -26,11 +28,7 @@ export default class Dropbox {
 
     if (!options.fetch) { console.warn('Global fetch is deprecated and will be unsupported in a future version. Please pass fetch function as option when instantiating dropbox instance: new Dropbox({fetch})'); } // eslint-disable-line no-console
 
-    this.accessToken = options.accessToken;
-    this.accessTokenExpiresAt = options.accessTokenExpiresAt;
-    this.refreshToken = options.refreshToken;
-    this.clientId = options.clientId;
-    this.clientSecret = options.clientSecret;
+    this.auth = DropboxAuth(options)
     this.selectUser = options.selectUser;
     this.selectAdmin = options.selectAdmin;
     this.fetch = options.fetch || fetch;

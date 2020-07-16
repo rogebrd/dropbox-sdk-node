@@ -9,6 +9,7 @@ function parseBodyToType(res) {
   })
   .then(data => [res, data]);
 }
+
 function getDataFromConsumer(res) {
   if (!res.ok) {
     return res.text();
