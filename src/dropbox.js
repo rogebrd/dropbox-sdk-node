@@ -1,5 +1,6 @@
 import { routes } from '../lib/routes';
 import { routes as teamRoutes } from '../lib/routes-team';
+import { rpcRequest, downloadRequest, uploadRequest} from './request';
 
 /**
  * @class Dropbox
@@ -43,19 +44,21 @@ export default class Dropbox {
 
   request(path, args, auth, host, style) {
     let request = null;
+
     switch (style) {
       case RPC:
-        request = this.getRpcRequest();
+        request = rpcRequest();
         break;
       case DOWNLOAD:
-        request = this.getDownloadRequest();
+        request = downloadRequest();
         break;
       case UPLOAD:
-        request = this.getUploadRequest();
+        request = uploadRequest();
         break;
       default:
         throw new Error(`Invalid request style: ${style}`);
     }
+
     const options = {
       selectUser: this.selectUser,
       selectAdmin: this.selectAdmin,
@@ -63,6 +66,7 @@ export default class Dropbox {
       clientSecret: this.getClientSecret(),
       pathRoot: this.pathRoot,
     };
+
     return request(path, args, auth, host, this, options);
   }
 }
