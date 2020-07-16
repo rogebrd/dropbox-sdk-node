@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-import { getTokenExpiresAtDate, parseBodyToType } from './utils';
+import { getTokenExpiresAtDate, getDataFromResponse } from './utils';
 
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
 const TokenExpirationBuffer = 300 * 1000;
@@ -237,8 +237,9 @@ export class DropboxAuth {
     };
 
     return this.fetch(path, fetchOptions)
-      .then((res) => parseBodyToType(res))
-      .then(([res, data]) => {
+      .then((res) => {
+        const data = getDataFromResponse(res);
+
         // maintaining existing API for error codes not equal to 200 range
         if (!res.ok) {
           // eslint-disable-next-line no-throw-literal
@@ -256,6 +257,7 @@ export class DropboxAuth {
             accessTokenExpiresAt: getTokenExpiresAtDate(data.expires_in),
           };
         }
+
         return data.access_token;
       });
   }
@@ -311,8 +313,9 @@ export class DropboxAuth {
     fetchOptions.headers = headers;
 
     return this.fetch(refreshUrl, fetchOptions)
-      .then((res) => parseBodyToType(res))
-      .then(([res, data]) => {
+      .then((res) => {
+        const data = getDataFromResponse(res);
+
         // maintaining existing API for error codes not equal to 200 range
         if (!res.ok) {
           // eslint-disable-next-line no-throw-literal
@@ -322,6 +325,7 @@ export class DropboxAuth {
             status: res.status,
           };
         }
+
         this.setAccessToken(data.access_token);
         this.setAccessTokenExpiresAt(getTokenExpiresAtDate(data.expires_in));
       });
