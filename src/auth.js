@@ -1,5 +1,7 @@
 import crypto from 'crypto';
 
+import { getTokenExpiresAtDate, parseBodyToType } from './utils';
+
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
 const TokenExpirationBuffer = 300 * 1000;
 const PKCELength = 128;
@@ -235,7 +237,7 @@ export class DropboxAuth {
     };
 
     return this.fetch(path, fetchOptions)
-      .then(res => parseBodyToType(res))
+      .then((res) => parseBodyToType(res))
       .then(([res, data]) => {
         // maintaining existing API for error codes not equal to 200 range
         if (!res.ok) {
@@ -251,7 +253,7 @@ export class DropboxAuth {
           return {
             accessToken: data.access_token,
             refreshToken: data.refresh_token,
-            accessTokenExpiresAt: getTokenExpiresAt(data.expires_in),
+            accessTokenExpiresAt: getTokenExpiresAtDate(data.expires_in),
           };
         }
         return data.access_token;
@@ -265,8 +267,8 @@ export class DropboxAuth {
    */
   checkAndRefreshAccessToken() {
     const canRefresh = this.getRefreshToken() && this.getClientId();
-    const needsRefresh = this.getAccessTokenExpiresAt() &&
-            (new Date(Date.now() + TokenExpirationBuffer)) >= this.getAccessTokenExpiresAt();
+    const needsRefresh = this.getAccessTokenExpiresAt()
+      && (new Date(Date.now() + TokenExpirationBuffer)) >= this.getAccessTokenExpiresAt();
     const needsToken = !this.getAccessToken();
     if ((needsRefresh || needsToken) && canRefresh) {
       return this.refreshAccessToken();
@@ -309,19 +311,19 @@ export class DropboxAuth {
     fetchOptions.headers = headers;
 
     return this.fetch(refreshUrl, fetchOptions)
-    .then(res => parseBodyToType(res))
-    .then(([res, data]) => {
-      // maintaining existing API for error codes not equal to 200 range
-      if (!res.ok) {
-        // eslint-disable-next-line no-throw-literal
-        throw {
-          error: data,
-          response: res,
-          status: res.status,
-        };
-      }
-      this.setAccessToken(data.access_token);
-      this.setAccessTokenExpiresAt(getTokenExpiresAt(data.expires_in));
-    });
+      .then((res) => parseBodyToType(res))
+      .then(([res, data]) => {
+        // maintaining existing API for error codes not equal to 200 range
+        if (!res.ok) {
+          // eslint-disable-next-line no-throw-literal
+          throw {
+            error: data,
+            response: res,
+            status: res.status,
+          };
+        }
+        this.setAccessToken(data.access_token);
+        this.setAccessTokenExpiresAt(getTokenExpiresAtDate(data.expires_in));
+      });
   }
 }
