@@ -1,18 +1,25 @@
 declare module DropboxTypes {
-  interface DropboxOptions {
+  interface DropboxAuthOptions {
     // An access token for making authenticated requests.
     accessToken?: string;
+    accessTokenExpiresAt?: Date;
+    refreshToken?: string;
     // The client id for your app. Used to create authentication URL.
     clientId?: string;
-    // Select user is only used by team endpoints. It specifies which user the team access token should be acting as.
-    selectUser?: string;
-    // Root path used to access namespaces different from home namespace (team folders etc)
-    pathRoot?: string;
-    // Fetch library for making requests.
-    fetch?: Function
+    clientSecret?: string;
   }
 
-  class DropboxBase {
+  class DropboxAuth {
+    /**
+     * The Default Dropbox SDK class.
+     */
+    constructor();
+
+    /**
+     * The Dropbox SDK class.
+     */
+    constructor(options: DropboxAuthOptions);
+
     /**
      * Get the access token.
      */
@@ -25,13 +32,6 @@ declare module DropboxTypes {
      * @param code An OAuth2 code.
      */
     getAccessTokenFromCode(redirectUri: string, code: string): Promise<string>;
-
-    /**
-     * An authentication process that works with cordova applications.
-     * @param successCallback Called when the authentication succeed
-     * @param errorCallback Called when the authentication failed.
-     */
-    authenticateWithCordova(successCallback: (accessToken: string) => void, errorCallback: () => void): void;
 
     /**
      * Get a URL that can be used to authenticate users for the Dropbox API.
@@ -64,6 +64,19 @@ declare module DropboxTypes {
      * @param clientSecret Your app's client secret.
      */
     setClientSecret(clientSecret: string): void;
+
+    setRefreshToken(refreshToken: string): void;
+
+    getRefreshToken(): string;
+
+    setAccessTokenExpiresAt(accessTokenExpiresAt: Date): void;
+
+    getAccessTokenExpiresAt(): Date;
+
+    checkAndRefreshAccessToken(): void;
+
+    refreshAccessToken(scope?: string): void;
+
   }
 
 

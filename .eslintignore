@@ -1,6 +1,6 @@
-src/types.js
-src/routes.js
-src/routes-team.js
+lib/types.js
+lib/routes.js
 types/dropbox_types.d.ts
 types/dropbox.d.ts
-types/dropbox_team.d.ts
+test/types/types_test.js
+test/types/types_test.js.map

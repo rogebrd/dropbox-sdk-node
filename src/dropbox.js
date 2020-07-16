@@ -10,7 +10,6 @@ import {
   NO_AUTH,
 } from './constants';
 import { routes } from '../lib/routes';
-import { routes as teamRoutes } from '../lib/routes-team';
 import { DropboxAuth } from './auth';
 import { getDataFromResponse, getBaseURL, httpHeaderSafeJson } from './utils';
 
@@ -35,15 +34,12 @@ export default class Dropbox {
   constructor(options) {
     options = options || {};
 
-    if (!options.fetch) { console.warn('Global fetch is deprecated and will be unsupported in a future version. Please pass fetch function as option when instantiating dropbox instance: new Dropbox({fetch})'); } // eslint-disable-line no-console
-
     this.auth = DropboxAuth(options);
     this.selectUser = options.selectUser;
     this.selectAdmin = options.selectAdmin;
     this.pathRoot = options.pathRoot;
 
     Object.assign(this, routes);
-    Object.assign(this, teamRoutes);
   }
 
   // TODO: What about sharing route that was defined here?
