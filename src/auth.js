@@ -1,4 +1,15 @@
-export class Auth {
+import crypto from 'crypto';
+
+// Expiration is 300 seconds but needs to be in milliseconds for Date object
+const TokenExpirationBuffer = 300 * 1000;
+const PKCELength = 128;
+const TokenAccessTypes = ['legacy', 'offline', 'online'];
+const GrantTypes = ['code', 'token'];
+const IncludeGrantedScopes = ['none', 'user', 'team'];
+const BaseAuthorizeUrl = 'https://www.dropbox.com/oauth2/authorize';
+const BaseTokenUrl = 'https://api.dropboxapi.com/oauth2/token';
+
+export class DropboxAuth {
   constructor(options) {
     options = options || {};
 
@@ -110,6 +121,7 @@ export class Auth {
       .replace(/=/g, '');
     this.codeChallenge = codeChallenge;
   }
+
   /**
    * Get a URL that can be used to authenticate users for the Dropbox API.
    * @arg {String} redirectUri - A URL to redirect the user to after
@@ -295,20 +307,21 @@ export class Auth {
     };
 
     fetchOptions.headers = headers;
+
     return this.fetch(refreshUrl, fetchOptions)
-      .then(res => parseBodyToType(res))
-      .then(([res, data]) => {
-        // maintaining existing API for error codes not equal to 200 range
-        if (!res.ok) {
-          // eslint-disable-next-line no-throw-literal
-          throw {
-            error: data,
-            response: res,
-            status: res.status,
-          };
-        }
-        this.setAccessToken(data.access_token);
-        this.setAccessTokenExpiresAt(getTokenExpiresAt(data.expires_in));
-      });
+    .then(res => parseBodyToType(res))
+    .then(([res, data]) => {
+      // maintaining existing API for error codes not equal to 200 range
+      if (!res.ok) {
+        // eslint-disable-next-line no-throw-literal
+        throw {
+          error: data,
+          response: res,
+          status: res.status,
+        };
+      }
+      this.setAccessToken(data.access_token);
+      this.setAccessTokenExpiresAt(getTokenExpiresAt(data.expires_in));
+    });
   }
 }
