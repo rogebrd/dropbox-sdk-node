@@ -1,5 +1,3 @@
-const dropbox = require('./dropbox');
+import Dropbox from './dropbox.js';
 
-module.exports = {
-  Dropbox: dropbox,
-};
+export default Dropbox;
