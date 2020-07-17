@@ -58,7 +58,7 @@ export default class Dropbox {
   }
 
   rpcRequest(path, body, auth, host) {
-    return this.checkAndRefreshAccessToken()
+    return this.auth.checkAndRefreshAccessToken()
       .then(() => {
         const fetchOptions = {
           method: 'POST',
@@ -112,7 +112,7 @@ export default class Dropbox {
   }
 
   downloadRequest(path, args, auth, host) {
-    return this.checkAndRefreshAccessToken()
+    return this.auth.checkAndRefreshAccessToken()
       .then(() => {
         if (auth !== USER_AUTH) {
           throw new Error(`Unexpected auth type: ${auth}`);

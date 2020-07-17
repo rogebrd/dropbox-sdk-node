@@ -4,3 +4,4 @@ types/dropbox_types.d.ts
 types/dropbox.d.ts
 test/types/types_test.js
 test/types/types_test.js.map
+docs/**

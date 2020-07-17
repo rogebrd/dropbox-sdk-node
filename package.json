@@ -12,7 +12,8 @@
     "test": "npm run lint && npm run report-mocha && npm run test-typescript",
     "test-typescript": "tsc --build test/types",
     "report": "nyc -r test -r lcov report",
-    "generate-docs": "jsdoc -c ./.jsdoc.json"
+    "generate-docs": "jsdoc -c ./.jsdoc.json",
+    "publish-docs": "rm -rf docs && npm run generate-docs && gh-pages -d docs"
   },
   "author": "",
   "license": "MIT",
