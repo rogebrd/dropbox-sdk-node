@@ -8,9 +8,9 @@ import {
   TEAM_AUTH,
   USER_AUTH,
   NO_AUTH,
-} from './constants';
-import { routes } from '../lib/routes';
-import { DropboxAuth } from './auth';
+} from './constants.js';
+import { routes } from '../lib/routes.js';
+import { DropboxAuth } from './auth.js';
 import { getBaseURL, httpHeaderSafeJson } from './utils.js';
 import { parseDownloadResponse, parseRpcResponse } from './response.js';
 
