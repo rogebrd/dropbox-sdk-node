@@ -1,6 +1,7 @@
 {
   "extends": ["airbnb-base"],
   "env": {
+    "browser": false,
     "node": true
   },
   "rules": {
@@ -8,8 +9,7 @@
     "no-param-reassign": 0,
     "import/prefer-default-export": 0
   },
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "impliedStrict": false
-  }
+  "plugins": ["@typescript-eslint"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": { "ecmaVersion": 6 }
 }
