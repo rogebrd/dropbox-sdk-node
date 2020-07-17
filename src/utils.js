@@ -15,13 +15,3 @@ export function httpHeaderSafeJson(args) {
 export function getTokenExpiresAtDate(expiresIn) {
   return new Date(Date.now() + (expiresIn * 1000));
 }
-
-export function getDataFromResponse(res) {
-  const clone = res.clone();
-
-  return new Promise((resolve) => {
-    res.json()
-      .then((data) => resolve(data))
-      .catch(() => resolve(clone.text()));
-  });
-}

@@ -1,6 +1,8 @@
 import crypto from 'crypto';
+import fetch from 'node-fetch';
 
-import { getTokenExpiresAtDate, getDataFromResponse } from './utils';
+import { getTokenExpiresAtDate } from './utils.js';
+import { parseRpcResponse } from './response.js';
 
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
 const TokenExpirationBuffer = 300 * 1000;
@@ -237,29 +239,7 @@ export class DropboxAuth {
     };
 
     return this.fetch(path, fetchOptions)
-      .then((res) => {
-        const data = getDataFromResponse(res);
-
-        // maintaining existing API for error codes not equal to 200 range
-        if (!res.ok) {
-          // eslint-disable-next-line no-throw-literal
-          throw {
-            error: data,
-            response: res,
-            status: res.status,
-          };
-        }
-
-        if (data.refresh_token) {
-          return {
-            accessToken: data.access_token,
-            refreshToken: data.refresh_token,
-            accessTokenExpiresAt: getTokenExpiresAtDate(data.expires_in),
-          };
-        }
-
-        return data.access_token;
-      });
+      .then((res) => parseRpcResponse(res));
   }
 
   /**
@@ -312,22 +292,11 @@ export class DropboxAuth {
 
     fetchOptions.headers = headers;
 
-    return this.fetch(refreshUrl, fetchOptions)
+    return fetch(refreshUrl, fetchOptions)
+      .then((res) => parseRpcResponse(res))
       .then((res) => {
-        const data = getDataFromResponse(res);
-
-        // maintaining existing API for error codes not equal to 200 range
-        if (!res.ok) {
-          // eslint-disable-next-line no-throw-literal
-          throw {
-            error: data,
-            response: res,
-            status: res.status,
-          };
-        }
-
-        this.setAccessToken(data.access_token);
-        this.setAccessTokenExpiresAt(getTokenExpiresAtDate(data.expires_in));
+        this.setAccessToken(res.access_token);
+        this.setAccessTokenExpiresAt(getTokenExpiresAtDate(res.expires_in));
       });
   }
 }

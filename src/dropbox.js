@@ -11,7 +11,8 @@ import {
 } from './constants';
 import { routes } from '../lib/routes';
 import { DropboxAuth } from './auth';
-import { getDataFromResponse, getBaseURL, httpHeaderSafeJson } from './utils';
+import { getBaseURL, httpHeaderSafeJson } from './utils.js';
+import { parseDownloadResponse, parseRpcResponse } from './response.js';
 
 /**
  * @class Dropbox
@@ -34,7 +35,7 @@ export default class Dropbox {
   constructor(options) {
     options = options || {};
 
-    this.auth = DropboxAuth(options);
+    this.auth = new DropboxAuth(options);
     this.selectUser = options.selectUser;
     this.selectAdmin = options.selectAdmin;
     this.pathRoot = options.pathRoot;
@@ -94,21 +95,7 @@ export default class Dropbox {
         return fetchOptions;
       })
       .then((fetchOptions) => fetch(getBaseURL(host) + path, fetchOptions))
-      .then((res) => {
-        const data = getDataFromResponse(res);
-
-        // maintaining existing API for error codes not equal to 200 range
-        if (!res.ok) {
-          // eslint-disable-next-line no-throw-literal
-          throw {
-            error: data,
-            response: res,
-            status: res.status,
-          };
-        }
-
-        return data;
-      });
+      .then((res) => parseRpcResponse(res));
   }
 
   downloadRequest(path, args, auth, host) {
@@ -131,29 +118,7 @@ export default class Dropbox {
         return fetchOptions;
       })
       .then((fetchOptions) => fetch(getBaseURL(host) + path, fetchOptions))
-      .then((res) => {
-        let data;
-
-        if (!res.ok) {
-          data = res.text();
-        } else {
-          data = res.buffer();
-        }
-
-        if (!res.ok) {
-          // eslint-disable-next-line no-throw-literal
-          throw {
-            error: data,
-            response: res,
-            status: res.status,
-          };
-        }
-
-        const result = JSON.parse(res.headers.get('dropbox-api-result'));
-        result.fileBinary = data;
-
-        return result;
-      });
+      .then((res) => parseDownloadResponse(res));
   }
 
   uploadRequest(path, args, auth, host) {
@@ -181,21 +146,7 @@ export default class Dropbox {
         return fetchOptions;
       })
       .then((fetchOptions) => fetch(getBaseURL(host) + path, fetchOptions))
-      .then((res) => {
-        const data = getDataFromResponse(res);
-
-        // maintaining existing API for error codes not equal to 200 range
-        if (!res.ok) {
-          // eslint-disable-next-line no-throw-literal
-          throw {
-            error: data,
-            response: res,
-            status: res.status,
-          };
-        }
-
-        return data;
-      });
+      .then((res) => parseRpcResponse(res));
   }
 
   setCommonHeaders(options) {
