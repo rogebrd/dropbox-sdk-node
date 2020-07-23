@@ -12,7 +12,7 @@
     "mocha": "mocha test/*.js",
     "test": "npm run test:typescript && npm run test:integration",
     "test:typescript": "tsc --build test/types",
-    "test:integration": "./node_modules/.bin/mocha --require @babel/register test/integration/**/*.js",
+    "test:integration": "./node_modules/.bin/mocha --timeout 10000 --require @babel/register test/integration/**/*.js",
     "report": "nyc -r test -r lcov report",
     "generate-docs": "jsdoc -c ./.jsdoc.json",
     "publish-docs": "rm -rf docs && npm run generate-docs && gh-pages -d docs"
