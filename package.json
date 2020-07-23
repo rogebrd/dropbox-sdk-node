@@ -6,6 +6,7 @@
   "typings": "types/dropbox-sdk.d.ts",
   "type": "module",
   "scripts": {
+    "build": "babel src -d dist/src; babel lib -d dist/lib; babel index.js -d dist",
     "lint": "eslint --ext .js,.jsx,.ts .",
     "lint-fix": "eslint --fix --ext .js,.jsx,.ts .",
     "report-mocha": "nyc mocha test/*.js",
@@ -21,6 +22,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@babel/cli": "^7.10.5",
     "@babel/core": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
     "@babel/register": "^7.10.5",
