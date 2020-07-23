@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import fetch from 'node-fetch';
 
 import { getTokenExpiresAtDate } from './utils.js';
-import { parseRpcResponse } from './response.js';
+import { parseResponse } from './response.js';
 
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
 const TokenExpirationBuffer = 300 * 1000;
@@ -239,7 +239,7 @@ export class DropboxAuth {
     };
 
     return this.fetch(path, fetchOptions)
-      .then((res) => parseRpcResponse(res));
+      .then((res) => parseResponse(res));
   }
 
   /**
@@ -293,7 +293,7 @@ export class DropboxAuth {
     fetchOptions.headers = headers;
 
     return fetch(refreshUrl, fetchOptions)
-      .then((res) => parseRpcResponse(res))
+      .then((res) => parseResponse(res))
       .then((res) => {
         this.setAccessToken(res.access_token);
         this.setAccessTokenExpiresAt(getTokenExpiresAtDate(res.expires_in));
