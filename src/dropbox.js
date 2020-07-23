@@ -12,7 +12,7 @@ import {
 import { routes } from '../lib/routes.js';
 import { DropboxAuth } from './auth.js';
 import { getBaseURL, httpHeaderSafeJson } from './utils.js';
-import { parseDownloadResponse, parseRpcResponse } from './response.js';
+import { parseDownloadResponse, parseResponse } from './response.js';
 
 /**
  * @class Dropbox
@@ -95,7 +95,7 @@ export default class Dropbox {
         return fetchOptions;
       })
       .then((fetchOptions) => fetch(getBaseURL(host) + path, fetchOptions))
-      .then((res) => parseRpcResponse(res));
+      .then((res) => parseResponse(res));
   }
 
   downloadRequest(path, args, auth, host) {
@@ -146,7 +146,7 @@ export default class Dropbox {
         return fetchOptions;
       })
       .then((fetchOptions) => fetch(getBaseURL(host) + path, fetchOptions))
-      .then((res) => parseRpcResponse(res));
+      .then((res) => parseResponse(res));
   }
 
   setCommonHeaders(options) {

@@ -6,7 +6,7 @@ export class DropboxResponse {
   }
 }
 
-export function parseRpcResponse(res) {
+export function parseResponse(res) {
   const clone = res.clone();
 
   return res.json()
