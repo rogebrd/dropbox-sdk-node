@@ -17,16 +17,24 @@ export function parseRpcResponse(res) {
 }
 
 export function parseDownloadResponse(res) {
-  let data;
+  return new Promise((resolve) => {
+    if (!res.ok) {
+      res.text()
+        .then((data) => resolve(data));
+    }
+    res.buffer()
+      .then((data) => resolve(data));
+  })
+    .then((data) => {
+      let result;
 
-  if (!res.ok) {
-    data = res.text();
-  } else {
-    data = res.buffer();
-  }
+      if (!res.ok) {
+        result = data;
+      } else {
+        result = JSON.parse(res.headers.get('dropbox-api-result'));
+        result.fileBinary = data;
+      }
 
-  const result = JSON.parse(res.headers.get('dropbox-api-result'));
-  result.fileBinary = data;
-
-  return new DropboxResponse(res.status, res.headers, result);
+      return new DropboxResponse(res.status, res.headers, result);
+    });
 }
