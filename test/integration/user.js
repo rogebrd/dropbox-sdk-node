@@ -7,7 +7,7 @@ import Dropbox from '../../index.js';
 import { DropboxResponse } from '../../src/response.js';
 
 describe('User', () => {
-  const dbx = new Dropbox({ accessToken: process.env.DBX_ACCESS_TOKEN });
+  const dbx = new Dropbox({ accessToken: process.env.DROPBOX_TOKEN });
 
   describe('rpc', () => {
     it('rpc request is successful', (done) => {
@@ -25,7 +25,7 @@ describe('User', () => {
 
   describe('download', () => {
     it('download request is successful', (done) => {
-      dbx.sharingGetSharedLinkFile({ url: process.env.DBX_SHARED_LINK })
+      dbx.sharingGetSharedLinkFile({ url: process.env.DROPBOX_SHARED_LINK })
         .then((resp) => {
           chai.assert.instanceOf(resp, DropboxResponse);
           chai.assert.equal(resp.status, 200, resp.result);
