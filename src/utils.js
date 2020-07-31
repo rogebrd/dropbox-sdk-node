@@ -13,5 +13,5 @@ export function httpHeaderSafeJson(args) {
 }
 
 export function getTokenExpiresAtDate(expiresIn) {
-  return new Date(Date.now() + (expiresIn * 1000));
+  return new Date(Date.now() + expiresIn * 1000);
 }

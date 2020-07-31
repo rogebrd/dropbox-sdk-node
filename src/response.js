@@ -9,7 +9,8 @@ export class DropboxResponse {
 export function parseResponse(res) {
   const clone = res.clone();
 
-  return res.json()
+  return res
+    .json()
     .catch(() => {
       clone.text();
     })
@@ -19,22 +20,19 @@ export function parseResponse(res) {
 export function parseDownloadResponse(res) {
   return new Promise((resolve) => {
     if (!res.ok) {
-      res.text()
-        .then((data) => resolve(data));
+      res.text().then((data) => resolve(data));
     }
-    res.buffer()
-      .then((data) => resolve(data));
-  })
-    .then((data) => {
-      let result;
+    res.buffer().then((data) => resolve(data));
+  }).then((data) => {
+    let result;
 
-      if (!res.ok) {
-        result = data;
-      } else {
-        result = JSON.parse(res.headers.get('dropbox-api-result'));
-        result.fileBinary = data;
-      }
+    if (!res.ok) {
+      result = data;
+    } else {
+      result = JSON.parse(res.headers.get("dropbox-api-result"));
+      result.fileBinary = data;
+    }
 
-      return new DropboxResponse(res.status, res.headers, result);
-    });
+    return new DropboxResponse(res.status, res.headers, result);
+  });
 }

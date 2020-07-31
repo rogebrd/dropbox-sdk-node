@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import fetch from "node-fetch";
 
 import {
   UPLOAD,
@@ -8,11 +8,11 @@ import {
   TEAM_AUTH,
   USER_AUTH,
   NO_AUTH,
-} from './constants.js';
-import { routes } from '../lib/routes.js';
-import { DropboxAuth } from './auth.js';
-import { getBaseURL, httpHeaderSafeJson } from './utils.js';
-import { parseDownloadResponse, parseResponse } from './response.js';
+} from "./constants.js";
+import { routes } from "../lib/routes.js";
+import { DropboxAuth } from "./auth.js";
+import { getBaseURL, httpHeaderSafeJson } from "./utils.js";
+import { parseDownloadResponse, parseResponse } from "./response.js";
 
 /**
  * @class Dropbox
@@ -59,25 +59,30 @@ export default class Dropbox {
   }
 
   rpcRequest(path, body, auth, host) {
-    return this.auth.checkAndRefreshAccessToken()
+    return this.auth
+      .checkAndRefreshAccessToken()
       .then(() => {
         const fetchOptions = {
-          method: 'POST',
-          body: (body) ? JSON.stringify(body) : null,
+          method: "POST",
+          body: body ? JSON.stringify(body) : null,
           headers: {},
         };
 
         if (body) {
-          fetchOptions.headers['Content-Type'] = 'application/json';
+          fetchOptions.headers["Content-Type"] = "application/json";
         }
 
         let authHeader;
         switch (auth) {
           case APP_AUTH:
             if (!this.auth.clientId || !this.auth.clientSecret) {
-              throw new Error('A client id and secret is required for this function');
+              throw new Error(
+                "A client id and secret is required for this function"
+              );
             }
-            authHeader = Buffer.from(`${this.auth.clientId}:${this.auth.clientSecret}`).toString('base64');
+            authHeader = Buffer.from(
+              `${this.auth.clientId}:${this.auth.clientSecret}`
+            ).toString("base64");
             fetchOptions.headers.Authorization = `Basic ${authHeader}`;
             break;
           case TEAM_AUTH:
@@ -99,17 +104,18 @@ export default class Dropbox {
   }
 
   downloadRequest(path, args, auth, host) {
-    return this.auth.checkAndRefreshAccessToken()
+    return this.auth
+      .checkAndRefreshAccessToken()
       .then(() => {
         if (auth !== USER_AUTH) {
           throw new Error(`Unexpected auth type: ${auth}`);
         }
 
         const fetchOptions = {
-          method: 'POST',
+          method: "POST",
           headers: {
             Authorization: `Bearer ${this.auth.getAccessToken()}`,
-            'Dropbox-API-Arg': httpHeaderSafeJson(args),
+            "Dropbox-API-Arg": httpHeaderSafeJson(args),
           },
         };
 
@@ -122,7 +128,8 @@ export default class Dropbox {
   }
 
   uploadRequest(path, args, auth, host) {
-    return this.auth.checkAndRefreshAccessToken()
+    return this.auth
+      .checkAndRefreshAccessToken()
       .then(() => {
         if (auth !== USER_AUTH) {
           throw new Error(`Unexpected auth type: ${auth}`);
@@ -133,11 +140,11 @@ export default class Dropbox {
 
         const fetchOptions = {
           body: contents,
-          method: 'POST',
+          method: "POST",
           headers: {
             Authorization: `Bearer ${this.auth.getAccessToken()}`,
-            'Content-Type': 'application/octet-stream',
-            'Dropbox-API-Arg': httpHeaderSafeJson(args),
+            "Content-Type": "application/octet-stream",
+            "Dropbox-API-Arg": httpHeaderSafeJson(args),
           },
         };
 
@@ -151,13 +158,13 @@ export default class Dropbox {
 
   setCommonHeaders(options) {
     if (this.selectUser) {
-      options.headers['Dropbox-API-Select-User'] = this.selectUser;
+      options.headers["Dropbox-API-Select-User"] = this.selectUser;
     }
     if (this.selectAdmin) {
-      options.headers['Dropbox-API-Select-Admin'] = this.selectAdmin;
+      options.headers["Dropbox-API-Select-Admin"] = this.selectAdmin;
     }
     if (this.pathRoot) {
-      options.headers['Dropbox-API-Path-Root'] = this.pathRoot;
+      options.headers["Dropbox-API-Path-Root"] = this.pathRoot;
     }
   }
 }

@@ -1,17 +1,17 @@
-import crypto from 'crypto';
-import fetch from 'node-fetch';
+import crypto from "crypto";
+import fetch from "node-fetch";
 
-import { getTokenExpiresAtDate } from './utils.js';
-import { parseResponse } from './response.js';
+import { getTokenExpiresAtDate } from "./utils.js";
+import { parseResponse } from "./response.js";
 
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
 const TokenExpirationBuffer = 300 * 1000;
 const PKCELength = 128;
-const TokenAccessTypes = ['legacy', 'offline', 'online'];
-const GrantTypes = ['code', 'token'];
-const IncludeGrantedScopes = ['none', 'user', 'team'];
-const BaseAuthorizeUrl = 'https://www.dropbox.com/oauth2/authorize';
-const BaseTokenUrl = 'https://api.dropboxapi.com/oauth2/token';
+const TokenAccessTypes = ["legacy", "offline", "online"];
+const GrantTypes = ["code", "token"];
+const IncludeGrantedScopes = ["none", "user", "team"];
+const BaseAuthorizeUrl = "https://www.dropbox.com/oauth2/authorize";
+const BaseTokenUrl = "https://api.dropboxapi.com/oauth2/token";
 
 export class DropboxAuth {
   constructor(options) {
@@ -109,20 +109,22 @@ export class DropboxAuth {
 
   generatePKCECodes() {
     let codeVerifier = crypto.randomBytes(PKCELength);
-    codeVerifier = codeVerifier.toString('base64')
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-      .replace(/=/g, '')
+    codeVerifier = codeVerifier
+      .toString("base64")
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=/g, "")
       .substr(0, 128);
     this.codeVerifier = codeVerifier;
 
     const encoder = new TextEncoder();
     const codeData = encoder.encode(codeVerifier);
-    let codeChallenge = crypto.createHash('sha256').update(codeData).digest();
-    codeChallenge = codeChallenge.toString('base64')
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-      .replace(/=/g, '');
+    let codeChallenge = crypto.createHash("sha256").update(codeData).digest();
+    codeChallenge = codeChallenge
+      .toString("base64")
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=/g, "");
     this.codeChallenge = codeChallenge;
   }
 
@@ -148,31 +150,41 @@ export class DropboxAuth {
    * can be used if you are unable to safely retrieve your app secret
    * @returns {String} Url to send user to for Dropbox API authentication
    */
-  getAuthenticationUrl(redirectUri, state, authType = 'token', tokenAccessType = 'legacy', scope = null, includeGrantedScopes = 'none', usePKCE = false) {
+  getAuthenticationUrl(
+    redirectUri,
+    state,
+    authType = "token",
+    tokenAccessType = "legacy",
+    scope = null,
+    includeGrantedScopes = "none",
+    usePKCE = false
+  ) {
     const clientId = this.getClientId();
     const baseUrl = BaseAuthorizeUrl;
 
     if (!clientId) {
-      throw new Error('A client id is required. You can set the client id using .setClientId().');
+      throw new Error(
+        "A client id is required. You can set the client id using .setClientId()."
+      );
     }
-    if (authType !== 'code' && !redirectUri) {
-      throw new Error('A redirect uri is required.');
+    if (authType !== "code" && !redirectUri) {
+      throw new Error("A redirect uri is required.");
     }
     if (!GrantTypes.includes(authType)) {
-      throw new Error('Authorization type must be code or token');
+      throw new Error("Authorization type must be code or token");
     }
     if (!TokenAccessTypes.includes(tokenAccessType)) {
-      throw new Error('Token Access Type must be legacy, offline, or online');
+      throw new Error("Token Access Type must be legacy, offline, or online");
     }
     if (scope && !(scope instanceof Array)) {
-      throw new Error('Scope must be an array of strings');
+      throw new Error("Scope must be an array of strings");
     }
     if (!IncludeGrantedScopes.includes(includeGrantedScopes)) {
-      throw new Error('includeGrantedScopes must be none, user, or team');
+      throw new Error("includeGrantedScopes must be none, user, or team");
     }
 
     let authUrl;
-    if (authType === 'code') {
+    if (authType === "code") {
       authUrl = `${baseUrl}?response_type=code&client_id=${clientId}`;
     } else {
       authUrl = `${baseUrl}?response_type=token&client_id=${clientId}`;
@@ -184,18 +196,18 @@ export class DropboxAuth {
     if (state) {
       authUrl += `&state=${state}`;
     }
-    if (tokenAccessType !== 'legacy') {
+    if (tokenAccessType !== "legacy") {
       authUrl += `&token_access_type=${tokenAccessType}`;
     }
     if (scope) {
-      authUrl += `&scope=${scope.join(' ')}`;
+      authUrl += `&scope=${scope.join(" ")}`;
     }
-    if (includeGrantedScopes !== 'none') {
+    if (includeGrantedScopes !== "none") {
       authUrl += `&include_granted_scopes=${includeGrantedScopes}`;
     }
     if (usePKCE) {
       this.generatePKCECodes();
-      authUrl += '&code_challenge_method=S256';
+      authUrl += "&code_challenge_method=S256";
       authUrl += `&code_challenge=${this.codeChallenge}`;
     }
     return authUrl;
@@ -206,16 +218,18 @@ export class DropboxAuth {
    * @arg {String} redirectUri - A URL to redirect the user to after
    * authenticating. This must be added to your app through the admin interface.
    * @arg {String} code - An OAuth2 code.
-  */
+   */
   getAccessTokenFromCode(redirectUri, code) {
     const clientId = this.getClientId();
     const clientSecret = this.getClientSecret();
 
     if (!clientId) {
-      throw new Error('A client id is required. You can set the client id using .setClientId().');
+      throw new Error(
+        "A client id is required. You can set the client id using .setClientId()."
+      );
     }
     let path = BaseTokenUrl;
-    path += '?grant_type=authorization_code';
+    path += "?grant_type=authorization_code";
     path += `&code=${code}`;
     path += `&client_id=${clientId}`;
 
@@ -223,7 +237,9 @@ export class DropboxAuth {
       path += `&client_secret=${clientSecret}`;
     } else {
       if (!this.codeChallenge) {
-        throw new Error('You must use PKCE when generating the authorization URL to not include a client secret');
+        throw new Error(
+          "You must use PKCE when generating the authorization URL to not include a client secret"
+        );
       }
       path += `&code_verifier=${this.codeVerifier}`;
     }
@@ -232,14 +248,13 @@ export class DropboxAuth {
     }
 
     const fetchOptions = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        "Content-Type": "application/x-www-form-urlencoded",
       },
     };
 
-    return this.fetch(path, fetchOptions)
-      .then((res) => parseResponse(res));
+    return this.fetch(path, fetchOptions).then((res) => parseResponse(res));
   }
 
   /**
@@ -249,8 +264,10 @@ export class DropboxAuth {
    */
   checkAndRefreshAccessToken() {
     const canRefresh = this.getRefreshToken() && this.getClientId();
-    const needsRefresh = this.getAccessTokenExpiresAt()
-      && (new Date(Date.now() + TokenExpirationBuffer)) >= this.getAccessTokenExpiresAt();
+    const needsRefresh =
+      this.getAccessTokenExpiresAt() &&
+      new Date(Date.now() + TokenExpirationBuffer) >=
+        this.getAccessTokenExpiresAt();
     const needsToken = !this.getAccessToken();
     if ((needsRefresh || needsToken) && canRefresh) {
       return this.refreshAccessToken();
@@ -270,24 +287,26 @@ export class DropboxAuth {
     const clientSecret = this.getClientSecret();
 
     if (!clientId) {
-      throw new Error('A client id is required. You can set the client id using .setClientId().');
+      throw new Error(
+        "A client id is required. You can set the client id using .setClientId()."
+      );
     }
     if (scope && !(scope instanceof Array)) {
-      throw new Error('Scope must be an array of strings');
+      throw new Error("Scope must be an array of strings");
     }
 
     const headers = {};
-    headers['Content-Type'] = 'application/json';
+    headers["Content-Type"] = "application/json";
     refreshUrl += `?grant_type=refresh_token&refresh_token=${this.getRefreshToken()}`;
     refreshUrl += `&client_id=${clientId}`;
     if (clientSecret) {
       refreshUrl += `&client_secret=${clientSecret}`;
     }
     if (scope) {
-      refreshUrl += `&scope=${scope.join(' ')}`;
+      refreshUrl += `&scope=${scope.join(" ")}`;
     }
     const fetchOptions = {
-      method: 'POST',
+      method: "POST",
     };
 
     fetchOptions.headers = headers;

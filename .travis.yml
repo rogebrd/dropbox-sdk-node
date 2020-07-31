@@ -1,12 +1,12 @@
 langauge: node_js
 node_js:
-  - 'node'
-  - '15'
-  - '14'
-  - '13'
-  - '12'
-  - '11'
-  - '10'
+  - "node"
+  - "15"
+  - "14"
+  - "13"
+  - "12"
+  - "11"
+  - "10"
 git:
   submodules: false
 script: npm run test

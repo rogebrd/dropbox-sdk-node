@@ -1,17 +1,18 @@
-import fs from 'fs/promises';
-import path from 'path';
+import fs from "fs/promises";
+import path from "path";
 
-import chai from 'chai';
+import chai from "chai";
 
-import Dropbox from '../../index.js';
-import { DropboxResponse } from '../../src/response.js';
+import Dropbox from "../../index.js";
+import { DropboxResponse } from "../../src/response.js";
 
-describe('User', () => {
+describe("User", () => {
   const dbx = new Dropbox({ accessToken: process.env.DROPBOX_TOKEN });
 
-  describe('rpc', () => {
-    it('rpc request is successful', (done) => {
-      dbx.usersGetCurrentAccount()
+  describe("rpc", () => {
+    it("rpc request is successful", (done) => {
+      dbx
+        .usersGetCurrentAccount()
         .then((resp) => {
           chai.assert.instanceOf(resp, DropboxResponse);
           chai.assert.equal(resp.status, 200, resp.result);
@@ -23,9 +24,10 @@ describe('User', () => {
     });
   });
 
-  describe('download', () => {
-    it('download request is successful', (done) => {
-      dbx.sharingGetSharedLinkFile({ url: process.env.DROPBOX_SHARED_LINK })
+  describe("download", () => {
+    it("download request is successful", (done) => {
+      dbx
+        .sharingGetSharedLinkFile({ url: process.env.DROPBOX_SHARED_LINK })
         .then((resp) => {
           chai.assert.instanceOf(resp, DropboxResponse);
           chai.assert.equal(resp.status, 200, resp.result);
@@ -40,11 +42,12 @@ describe('User', () => {
     });
   });
 
-  describe('upload', () => {
-    it('upload request is successful', (done) => {
-      fs.readFile(path.resolve('test/fixtures/test.txt'), 'utf8')
-        .then((contents) => {
-          dbx.filesUpload({ path: '/test.txt', contents })
+  describe("upload", () => {
+    it("upload request is successful", (done) => {
+      fs.readFile(path.resolve("test/fixtures/test.txt"), "utf8").then(
+        (contents) => {
+          dbx
+            .filesUpload({ path: "/test.txt", contents })
             .then((resp) => {
               chai.assert.instanceOf(resp, DropboxResponse);
               chai.assert.equal(resp.status, 200, resp.result);
@@ -53,7 +56,8 @@ describe('User', () => {
               done();
             })
             .catch(done);
-        });
+        }
+      );
     });
   });
 });
