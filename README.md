@@ -1,1 +1,1 @@
-# Dropbox Node SDK
+![](logo.png)
