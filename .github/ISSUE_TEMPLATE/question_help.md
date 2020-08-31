@@ -1,8 +1,8 @@
 ---
-name: Question or Help
+name: "\U0001F4AC Questions / Help"
 about: Get help with issues you are experiencing
 title: ''
-labels: 'help wanted', question
+labels: help-wanted, question
 assignees: ''
 
 ---
