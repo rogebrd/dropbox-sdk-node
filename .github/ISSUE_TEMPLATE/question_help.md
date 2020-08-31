@@ -1,11 +1,12 @@
 ---
-name: Question/Help
+name: Question or Help
 about: Get help with issues you are experiencing
 title: ''
-labels: "help wanted", question
+labels: 'help wanted', question
 assignees: ''
 
 ---
+
 **Before you start**
 Have you checked stackoverflow, previous issues, and Dropbox forums for help?
 
