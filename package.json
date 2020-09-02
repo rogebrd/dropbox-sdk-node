@@ -13,7 +13,10 @@
     "test:typescript": "tsc --build test/types",
     "test:integration": "./node_modules/.bin/mocha --timeout 10000 --require @babel/register test/integration/**/*.js",
     "test:unit": "./node_modules/.bin/mocha --require @babel/register test/unit/**/*.js",
-    "report": "nyc -r test -r lcov report",
+    "coverage:unit": "nyc --reporter=lcov npm run test:unit",
+    "coverage:typescript": "nyc --reporter=lcov npm run test:typescript",
+    "coverage:integration": "nyc --reporter=lcov npm run test:integration",
+    "report": "nyc report --reporter=lcov --reporter=text",
     "generate-docs": "jsdoc -c ./.jsdoc.json",
     "publish-docs": "rm -rf docs && npm run generate-docs && gh-pages -d docs"
   },
