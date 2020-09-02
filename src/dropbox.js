@@ -91,7 +91,6 @@ export default class Dropbox {
         }
 
         this.setCommonHeaders(fetchOptions);
-
         return fetchOptions;
       })
       .then((fetchOptions) => fetch(getBaseURL(host) + path, fetchOptions))

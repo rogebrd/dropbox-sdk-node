@@ -18,22 +18,5 @@ describe('Team', () => {
         })
         .catch(done);
     });
-
-    it('select-user rpc request is successful', (done) => {
-      const dbxSelectUser = new Dropbox({
-        accessToken: process.env.DROPBOX_TEAM_TOKEN,
-        selectUser: process.env.DROPBOX_USER_ID,
-      });
-
-      dbxSelectUser.usersGetCurrentAccount()
-        .then((resp) => {
-          chai.assert.instanceOf(resp, DropboxResponse);
-          chai.assert.equal(resp.status, 200, resp.result);
-          chai.assert.isObject(resp.result);
-
-          done();
-        })
-        .catch(done);
-    });
   });
 });
