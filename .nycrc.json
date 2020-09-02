@@ -2,7 +2,7 @@
     "all": true,
     "include": [
         "src/*.js",
-        "lib/*.js",
-        "types/*.d.ts"
-    ]
+        "lib/*.js"
+    ],
+    "require": ["@babel/register"]
 }
