@@ -5,7 +5,7 @@
  * and to perform a basic sanity check that types are exported as intended.
  */
 
-import * as Dropbox from '../../types/dropbox-sdk';
+import * as Dropbox from '../../types/dropbox-sdk'; // eslint-disable-line
 import DropboxAuth = Dropbox.DropboxAuth;
 
 // Check DropboxAuth Constructor and Methods

@@ -1,4 +1,4 @@
-name: Backend CI
+name: CI
 on:
   pull_request:
 
@@ -25,3 +25,9 @@ jobs:
       - name: Run Tests
         run: |
           npm test
+      - name: Run Integration Tests
+        env:
+          DROPBOX_TOKEN: ${{ secrets.DROPBOX_TOKEN }}
+          DROPBOX_TEAM_TOKEN: ${{ secrets.DROPBOX_TEAM_TOKEN }}
+        run: |
+          npm run test:integration
