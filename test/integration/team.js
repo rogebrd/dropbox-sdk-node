@@ -25,7 +25,7 @@ describe('Team', () => {
         selectUser: process.env.DROPBOX_USER_ID,
       });
 
-      dbxSelectUser.userGetCurrentAccount()
+      dbxSelectUser.usersGetCurrentAccount()
         .then((resp) => {
           chai.assert.instanceOf(resp, DropboxResponse);
           chai.assert.equal(resp.status, 200, resp.result);
