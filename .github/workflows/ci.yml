@@ -1,0 +1,27 @@
+name: Backend CI
+on:
+  pull_request:
+
+jobs:
+  CI:
+    continue-on-error: true
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node: [10, 11, 12, 13, 14, 15]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v1.4.3
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install SDK
+        run: |
+          npm install
+      - name: Run Linter
+        run: |
+          npm run lint
+      - name: Run Tests
+        run: |
+          npm test
