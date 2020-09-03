@@ -8,14 +8,14 @@ on:
     - cron: 0 0 * * *
 
 jobs:
-  Coverage:
+  Unit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Setup Node.js environment
         uses: actions/setup-node@v1.4.3
         with:
-          node-version: '12'
+          node-version: '14'
       - name: Install SDK
         run: |
           npm install
@@ -26,4 +26,28 @@ jobs:
         uses: codecov/codecov-action@v1.0.13
         with:
           flags: unit
+          fail_ci_if_error: true
+  Integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v1.4.3
+        with:
+          node-version: '14'
+      - name: Install SDK
+        run: |
+          npm install
+      - name: Generate Integration Test Coverage
+        env:
+          DROPBOX_TOKEN: ${{ secrets.DROPBOX_TOKEN }}
+          DROPBOX_TEAM_TOKEN: ${{ secrets.DROPBOX_TEAM_TOKEN }}
+          DROPBOX_USER_ID: ${{ secrets.DROPBOX_USER_ID }}
+          DROPBOX_SHARED_LINK: ${{ secrets.DROPBOX_SHARED_LINK }}
+        run: |
+          npm run coverage:integration
+      - name: Publish Coverage
+        uses: codecov/codecov-action@v1.0.13
+        with:
+          flags: integration
           fail_ci_if_error: true

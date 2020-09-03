@@ -15,7 +15,8 @@
     "report": "nyc report --reporter=lcov --reporter=text",
     "generate-docs": "jsdoc -c ./.jsdoc.json",
     "publish-docs": "rm -rf docs && npm run generate-docs && gh-pages -d docs",
-    "coverage:unit": "nyc --reporter=lcov npm run test:unit"
+    "coverage:unit": "nyc --reporter=lcov npm run test:unit",
+    "coverage:integration": "nyc --reporter=lcov npm run test:integration"
   },
   "author": "",
   "license": "MIT",

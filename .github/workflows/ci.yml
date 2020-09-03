@@ -22,9 +22,12 @@ jobs:
       - name: Run Linter
         run: |
           npm run lint
-      - name: Run Tests
+      - name: Run Unit Tests
         run: |
-          npm test
+          npm run test:unit
+      - name: Run TypeScipt Tests
+        run: |
+          npm run test:typescript
   Integration:
     runs-on: ${{ matrix.os }}
     strategy:
