@@ -1,3 +1,2 @@
 /// <reference path="./dropbox.d.ts" />
-export = DropboxTypes;
-export as namespace Dropbox;
+export as namespace Dropbox; // eslint-disable-line

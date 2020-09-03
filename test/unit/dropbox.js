@@ -20,7 +20,7 @@ describe('Dropbox', () => {
   describe('request()', () => {
     it('calls the correct request method', () => {
       const dbx = new Dropbox();
-      const rpcSpy = sinon.spy(dbx, "rpcRequest");
+      const rpcSpy = sinon.spy(dbx, 'rpcRequest');
       dbx.request('path', {}, USER_AUTH, 'api', RPC);
       chai.assert.isTrue(rpcSpy.calledOnce);
       chai.assert.equal('path', dbx.rpcRequest.getCall(0).args[0]);
