@@ -25,7 +25,7 @@ jobs:
       - name: Run Unit Tests
         run: |
           npm test:unit
-       - name: Run TypeScipt Tests
+      - name: Run TypeScipt Tests
         run: |
           npm test:typescript
   Integration:
