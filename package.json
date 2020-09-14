@@ -18,6 +18,7 @@
     "coverage:unit": "nyc --reporter=lcov npm run test:unit",
     "coverage:integration": "nyc --reporter=lcov npm run test:integration"
   },
+  "engines.node": {},
   "author": "",
   "license": "MIT",
   "devDependencies": {
