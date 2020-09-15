@@ -1,8 +1,19 @@
-import crypto from 'crypto';
-import fetch from 'node-fetch';
-
 import { getTokenExpiresAtDate } from './utils.js';
 import { parseResponse } from './response.js';
+
+let crypto;
+try {
+  crypto = require('crypto'); // eslint-disable-line global-require
+} catch (Exception) {
+  crypto = window.crypto;
+}
+
+let fetch;
+try {
+  fetch = require('node-fetch'); // eslint-disable-line global-require
+} catch (Exception) {
+  fetch = window.fetch;
+}
 
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
 const TokenExpirationBuffer = 300 * 1000;
@@ -13,7 +24,7 @@ const IncludeGrantedScopes = ['none', 'user', 'team'];
 const BaseAuthorizeUrl = 'https://www.dropbox.com/oauth2/authorize';
 const BaseTokenUrl = 'https://api.dropboxapi.com/oauth2/token';
 
-export class DropboxAuth {
+export default class DropboxAuth {
   constructor(options) {
     options = options || {};
 
