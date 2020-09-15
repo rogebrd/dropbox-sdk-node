@@ -8,10 +8,10 @@ assignees: ''
 ---
 
 **Before you start**
-Have you checked stackoverflow, previous issues, and Dropbox forums for help?
+Have you checked StackOverflow, previous issues, and Dropbox Developer Forums for help?
 
 **What is your question?**
-A clear and concise description of what the question is.
+A clear and concise description the question.
 
 **Screenshots**
 If applicable, add screenshots to help explain your question.
@@ -19,6 +19,7 @@ If applicable, add screenshots to help explain your question.
 **Versions**
 * What version of the SDK are you using?
 * What version of the language are you using?
+* Are you using Javascript or Typescript?
 * What platform are you using? (if applicable)
 
 **Additional context**

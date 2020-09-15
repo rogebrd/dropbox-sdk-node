@@ -1,54 +1,67 @@
-[![Logo][logo]][repo]
+[![Logo](logo)](repo)
 
-Build Badge
-Version Badge
-Code Coverage Badge
-Docs Badge
+[![node-current](https://img.shields.io/node/v/dropbox)](https://www.npmjs.com/package/dropbox)
+[![npm](https://img.shields.io/npm/v/dropbox)](https://www.npmjs.com/package/dropbox)
+[![codecov](https://codecov.io/gh/dropbox/dropbox-sdk-js/branch/master/graph/badge.svg)](https://codecov.io/gh/dropbox/dropbox-sdk-js)
 
-The offical Dropbox SDK for {language}.
+The offical Dropbox SDK for Javascript.
 
-Documentation can be found on [{Documentation Source}][documentation]
+Documentation can be found on [GitHub Pages][documentation]
 
 ## Installation
 
 Create an app via the [Developer Console][devconsole]
 
-Install via [{manager}]({link})
+Install via [npm](https://www.npmjs.com/)
 
 ```
-$ {install command}
+$ npm install --save dropbox
 ```
 
 Install from source:
 
 ```
-$ git clone {repo}
-$ cd {repo name}
-$ {install command}
+$ git clone https://github.com/dropbox/dropbox-sdk-js.git
+$ cd dropbox-sdk-js
+$ npm install
 ```
 
-After installation, follow one of our examples or read the [Documentation][documentation]
+After installation, follow one of our [Examples][examples] or read the [Documentation][documentation].
+
+You can also view our [OAuth guide][oauthguide].
 
 ## Examples
 
-We provide examples to help get you started with a lot of the basic functionality in the SDK.
+We provide [Examples][examples] to help get you started with a lot of the basic functionality in the SDK.
 
 - **OAuth**
-    - {link} - {Description}
+    - Auth - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/typescript/auth), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript/auth) ] - A simple auth example to get an access token and list the files in the root of your Dropbox account.
+    - Simple Backend [ [JS](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript/simple-backend) ] - A simple example of a node backend doing a multi-step auth flow for Short Lived Tokens.
+    - PKCE Backend [ [JS](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript/PKCE-backend) ] - A simple example of a node backend doing a multi-step auth flow using PKCE and Short Lived Tokens.
+
 - **Other Examples**
-    - {link} - {Description}
+    - Basic - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/typescript/basic), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript/basic) ] - A simple example that takes in a token and fetches files from your Dropbox account.
+    - Download - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/typescript/download), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript/download) ] - An example showing how to download a shared file.
+    - Team As User - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/typescript/team-as-user), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript/team-as-user) ] - An example showing how to act as a user.
+    - Team - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/typescript/team), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript/team) ] - An example showing how to use the team functionality and list team devices.
+    - Upload [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/typescript/upload), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript/upload) ] - An example showing how to upload a file to Dropbox.
 
 ## Getting Help
 
-We try to publish the highest-quality SDKs we can but we miss things occasionally.  If you find a bug, please see [CONTRIBUTING.md][contributing] for information on how to request.
+If you find a bug, please see [CONTRIBUTING.md][contributing] for information on how to report it.
+
+If you need help that is not specific to this SDK, please reach out to [Dropbox Support][support].
 
 ## License
 
 This SDK is distributed under the MIT license, please see [LICENSE][license] for more information.
 
-[logo]: {logo_link}
-[repo]: {repo_link}
-[documentation]: {documentation_link}
-[license]: {license_link}
-[contributing]: {contributing_link}
+[logo]: logo
+[repo]: https://github.com/dropbox/dropbox-sdk-js
+[documentation]: https://dropbox.github.io/dropbox-sdk-js/
+[examples]: https://github.com/dropbox/dropbox-sdk-js/tree/master/examples
+[license]: https://github.com/dropbox/dropbox-sdk-js/blob/master/LICENSE
+[contributing]: https://github.com/dropbox/dropbox-sdk-js/blob/master/CONTRIBUTING.md
 [devconsole]: https://dropbox.com/developers/apps
+[oauthguide]: https://www.dropbox.com/lp/developers/reference/oauth-guide
+[support]: https://www.dropbox.com/developers/contact

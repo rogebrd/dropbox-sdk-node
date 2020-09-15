@@ -1,6 +1,6 @@
 ---
 name: "\U0001F41B Bug report"
-about: Create a report to help us improve
+about: Create a report to help us improve the SDK
 title: ''
 labels: bug
 assignees: ''
@@ -8,13 +8,16 @@ assignees: ''
 ---
 
 **Describe the bug**
-A clear and concise description of what the bug is.
+A clear and concise description of the bug.
 
 **To Reproduce**
-Steps to reproduce the behavior
+The steps to reproduce the behavior
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+**Expected Behavior**
+A clear description of what you expected to happen.
+
+**Actual Behavior**
+A clear description of what actually happened
 
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
@@ -22,6 +25,7 @@ If applicable, add screenshots to help explain your problem.
 **Versions**
 * What version of the SDK are you using?
 * What version of the language are you using?
+* Are you using Javascript or Typescript?
 * What platform are you using? (if applicable)
 
 **Additional context**
