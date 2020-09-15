@@ -1,131 +1,3 @@
-declare module DropboxTypes {
-  interface DropboxAuthOptions {
-    // An access token for making authenticated requests.
-    accessToken?: string;
-    // The time at which the access token expires.
-    accessTokenExpiresAt?: Date;
-    // A refresh token for retrieving access tokens
-    refreshToken?: string;
-    // The client id for your app. Used to create authentication URL.
-    clientId?: string;
-    // The client secret for your app. Used for refresh and token exchange.
-    clientSecret?: string;
-  }
-
-  class DropboxAuth {
-    /**
-     * The DropboxAuth class that provides methods to manage, acquire, and refresh tokens.
-     */
-    constructor();
-
-    /**
-     * The DropboxAuth class that provides methods to manage, acquire, and refresh tokens.
-     */
-    constructor(options: DropboxAuthOptions);
-
-    /**
-     * Get the access token
-     * @returns {String} Access token
-     */
-    getAccessToken(): string;
-
-    /**
-     * Get an OAuth2 access token from an OAuth2 Code.
-     * @param redirectUri A URL to redirect the user to after authenticating.
-     *   This must be added to your app through the admin interface.
-     * @param code An OAuth2 code.
-     */
-    getAccessTokenFromCode(redirectUri: string, code: string): Promise<string>;
-
-    /**
-     * Get a URL that can be used to authenticate users for the Dropbox API.
-     * @arg {String} redirectUri - A URL to redirect the user to after
-     * authenticating. This must be added to your app through the admin interface.
-     * @arg {String} [state] - State that will be returned in the redirect URL to help
-     * prevent cross site scripting attacks.
-     * @arg {String} [authType] - auth type, defaults to 'token', other option is 'code'
-     * @arg {String} [tokenAccessType] - type of token to request.  From the following:
-     * legacy - creates one long-lived token with no expiration
-     * online - create one short-lived token with an expiration
-     * offline - create one short-lived token with an expiration with a refresh token
-     * @arg {Array<String>} [scope] - scopes to request for the grant
-     * @arg {String} [includeGrantedScopes] - whether or not to include previously granted scopes.
-     * From the following:
-     * user - include user scopes in the grant
-     * team - include team scopes in the grant
-     * Note: if this user has never linked the app, include_granted_scopes must be None
-     * @arg {boolean} [usePKCE] - Whether or not to use Sha256 based PKCE. PKCE should be only use on
-     * client apps which doesn't call your server. It is less secure than non-PKCE flow but
-     * can be used if you are unable to safely retrieve your app secret
-     * @returns {String} Url to send user to for Dropbox API authentication
-     */
-    getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code', tokenAccessType?: 'legacy' | 'offline' | 'online', scope?: Array<String>, includeGrantedScopes?: 'none' | 'user' | 'team', usePKCE?: boolean): string;
-
-    /**
-     * Get the client id
-     * @returns {String} Client id
-     */
-    getClientId(): string;
-
-    /**
-     * Set the access token used to authenticate requests to the API.
-     * @param accessToken An access token.
-     */
-    setAccessToken(accessToken: string): void;
-
-    /**
-     * Set the client id, which is used to help gain an access token.
-     * @param clientId Your app's client ID.
-     */
-    setClientId(clientId: string): void;
-
-    /**
-     * Set the client secret
-     * @param clientSecret Your app's client secret.
-     */
-    setClientSecret(clientSecret: string): void;
-
-    /**
-     * Sets the refresh token
-     * @param refreshToken - A refresh token
-     */
-    setRefreshToken(refreshToken: string): void;
-
-    /**
-     * Gets the refresh token
-     * @returns {String} Refresh token
-     */
-    getRefreshToken(): string;
-
-    /**
-     * Sets the access token's expiration date
-     * @param accessTokenExpiresAt - new expiration date
-     */
-    setAccessTokenExpiresAt(accessTokenExpiresAt: Date): void;
-
-    /**
-     * Gets the access token's expiration date
-     * @returns {Date} date of token expiration
-    */
-    getAccessTokenExpiresAt(): Date;
-
-    /**
-     * Checks if a token is needed, can be refreshed and if the token is expired.
-     * If so, attempts to refresh access token
-     * @returns {Promise<*>}
-     */
-    checkAndRefreshAccessToken(): void;
-
-    /**
-     * Refreshes the access token using the refresh token, if available
-     * @arg {List} scope - a subset of scopes from the original
-     * refresh to acquire with an access token
-     * @returns {Promise<*>}
-     */
-    refreshAccessToken(scope?: Array<String>): void;
-
-  }
-
 
   /**
    * An Error object returned from a route.
@@ -152,7 +24,7 @@ declare module DropboxTypes {
   
   type Timestamp = string;
 
-  namespace account {
+  export namespace account {
     /**
      * Image data in base64-encoded bytes.
      */
@@ -224,7 +96,7 @@ declare module DropboxTypes {
 
   }
 
-  namespace async {
+  export namespace async {
     /**
      * The job finished synchronously and successfully.
      */
@@ -325,7 +197,7 @@ declare module DropboxTypes {
 
   }
 
-  namespace auth {
+  export namespace auth {
     /**
      * Current account type cannot access the resource.
      */
@@ -535,7 +407,7 @@ declare module DropboxTypes {
 
   }
 
-  namespace check {
+  export namespace check {
     /**
      * EchoArg contains the arguments to be sent to the Dropbox servers.
      */
@@ -561,7 +433,7 @@ declare module DropboxTypes {
   /**
    * Endpoints and datatypes for Cloud Docs.
    */
-  namespace cloud_docs {
+  export namespace cloud_docs {
     /**
      * The Cloud Doc ID is invalid.
      */
@@ -910,7 +782,7 @@ declare module DropboxTypes {
 
   }
 
-  namespace common {
+  export namespace common {
     /**
      * Paths are relative to the authenticating user's home namespace, whether
      * or not that user belongs to a team.
@@ -1060,7 +932,7 @@ declare module DropboxTypes {
 
   }
 
-  namespace contacts {
+ export namespace contacts {
     export interface DeleteManualContactsArg {
       /**
        * List of manually added contacts to be deleted.
@@ -1113,7 +985,7 @@ declare module DropboxTypes {
    * `files/get_metadata`, and `files/list_folder`. Properties can also be added
    * during upload, using `files/upload`.
    */
-  namespace file_properties {
+  export namespace file_properties {
     export interface AddPropertiesArg {
       /**
        * A unique identifier for the file or folder.
@@ -1694,7 +1566,7 @@ declare module DropboxTypes {
    * This namespace contains endpoints and data types for file request
    * operations.
    */
-  namespace file_requests {
+  export namespace file_requests {
     /**
      * There was an error counting the file requests.
      */
@@ -2098,7 +1970,7 @@ declare module DropboxTypes {
   /**
    * This namespace contains endpoints and data types for basic file operations.
    */
-  namespace files {
+  export namespace files {
     export interface AlphaGetMetadataArg extends GetMetadataArg {
       /**
        * If set to a valid list of template IDs, FileMetadata.property_groups is
@@ -5285,7 +5157,7 @@ declare module DropboxTypes {
    * [Paper Migration Guide]{@link
    * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}.
    */
-  namespace paper {
+  export namespace paper {
     export interface AddMember {
       /**
        * Defaults to TagRef(Union(u'PaperDocPermissionLevel',
@@ -6249,7 +6121,7 @@ declare module DropboxTypes {
 
   }
 
-  namespace secondary_emails {
+  export namespace secondary_emails {
     export interface SecondaryEmail {
       /**
        * Secondary email address.
@@ -6264,7 +6136,7 @@ declare module DropboxTypes {
 
   }
 
-  namespace seen_state {
+  export namespace seen_state {
     /**
      * The content was viewed on the web.
      */
@@ -6330,7 +6202,7 @@ declare module DropboxTypes {
    * This namespace contains endpoints and data types for creating and managing
    * shared links and shared folders.
    */
-  namespace sharing {
+  export namespace sharing {
     /**
      * The shared folder inherits its members from the parent folder.
      */
@@ -10332,7 +10204,7 @@ declare module DropboxTypes {
 
   }
 
-  namespace stone_fixtures {
+  export namespace stone_fixtures {
     /**
      * This struct left intentionally empty
      */
@@ -10358,7 +10230,7 @@ declare module DropboxTypes {
 
   }
 
-  namespace team {
+  export namespace team {
     /**
      * Information on active web sessions.
      */
@@ -14754,7 +14626,7 @@ declare module DropboxTypes {
 
   }
 
-  namespace team_common {
+  export namespace team_common {
     /**
      * A group which is managed by selected users.
      */
@@ -14888,7 +14760,7 @@ declare module DropboxTypes {
 
   }
 
-  namespace team_log {
+  export namespace team_log {
     /**
      * End user session details.
      */
@@ -32755,7 +32627,7 @@ declare module DropboxTypes {
 
   }
 
-  namespace team_policies {
+  export namespace team_policies {
     /**
      * Background camera uploads are disabled.
      */
@@ -33321,7 +33193,7 @@ declare module DropboxTypes {
   /**
    * This namespace contains endpoints and data types for user management.
    */
-  namespace users {
+  export namespace users {
     /**
      * The amount of detail revealed about an account depends on the user being
      * queried and the user making the query.
@@ -33703,7 +33575,7 @@ declare module DropboxTypes {
   /**
    * This namespace contains common data types used within the users namespace.
    */
-  namespace users_common {
+  export namespace users_common {
     /**
      * The basic account type.
      */
@@ -33733,5 +33605,3 @@ declare module DropboxTypes {
     export type AccountId = string;
 
   }
-
-}

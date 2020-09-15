@@ -5,15 +5,14 @@
  * and to perform a basic sanity check that types are exported as intended.
  */
 
-import * as Dropbox from '../../types/dropbox-sdk'; // eslint-disable-line
-import DropboxAuth = Dropbox.DropboxAuth;
+import * as Dropbox from '../../types/dropbox'; // eslint-disable-line
 
 // Check DropboxAuth Constructor and Methods
 // Test default constructor
-let dropboxAuth = new DropboxAuth();
+let dropboxAuth = new Dropbox.DropboxAuth();
 
 // Test config constructor
-dropboxAuth = new DropboxAuth({
+dropboxAuth = new Dropbox.DropboxAuth({
   accessToken: 'myToken',
   accessTokenExpiresAt: new Date(Date.now()),
   refreshToken: 'myToken',
