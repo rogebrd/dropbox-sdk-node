@@ -36,10 +36,11 @@ dropboxAuth.setClientSecret('myClientSecret');
 dropboxAuth.getAuthenticationUrl('myRedirect');
 dropboxAuth.getAuthenticationUrl('myRedirect', 'myState');
 dropboxAuth.getAuthenticationUrl('myRedirect', 'myState', 'code');
+dropboxAuth.getAuthenticationUrl('myRedirect', 'mystate', 'code', 'offline', ['scope', 'scope'], 'none', false);
 dropboxAuth.getAccessTokenFromCode('myRedirect', 'myCode');
 dropboxAuth.checkAndRefreshAccessToken();
 dropboxAuth.refreshAccessToken();
-dropboxAuth.refreshAccessToken('files.metadata.read files.metadata.write');
+dropboxAuth.refreshAccessToken(['files.metadata.read', 'files.metadata.write']);
 
 // Check Dropbox Constructor or Methods
 // Test config constructor
@@ -50,4 +51,16 @@ const dropbox = new Dropbox.Dropbox({
   pathRoot: '',
 });
 
+const dropbox2 = new Dropbox.Dropbox({
+  accessToken: 'myToken',
+  accessTokenExpiresAt: new Date(Date.now()),
+  refreshToken: 'myToken',
+  clientId: 'myClientId',
+  clientSecret: 'myClientSecret',
+  selectUser: '',
+  selectAdmin: '',
+  pathRoot: '',
+});
+
 dropbox.usersGetCurrentAccount();
+dropbox2.usersGetCurrentAccount();

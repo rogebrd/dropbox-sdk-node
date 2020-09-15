@@ -1,19 +1,30 @@
 /// <reference path="./dropbox_types.d.ts" />
 declare module DropboxTypes {
   interface DropboxOptions {
-    // Auth object for handling tokens
-    auth: DropboxAuth;
-    // Select user is only used by team endpoints. It specifies which user the team access token should be acting as.
+    // Select user is only used for team functionality. It specifies which user the team access token should be acting as.
     selectUser?: string;
-    // Select admin
+    // Select admin is only used by team functionality. It specifies which team admin the team access token should be acting as.
     selectAdmin?: string;
-    // Root path used to access namespaces different from home namespace (team folders etc)
+    // Root path to access other namespaces. Use to access team folders for example
     pathRoot?: string;
+    // The DropboxAuth object used to authenticate requests. If this is set, the remaining parameters will be ignored.
+    auth: DropboxAuth?;
+    // An access token for making authenticated requests.
+    accessToken?: string;
+    // The time at which the access token expires.
+    accessTokenExpiresAt?: Date;
+    // A refresh token for retrieving access tokens
+    refreshToken?: string;
+    // The client id for your app. Used to create authentication URL.
+    clientId?: string;
+    // The client secret for your app. Used for refresh and token exchange.
+    clientSecret?: string;
   }
 
   class Dropbox {
     /**
-     * The Dropbox SDK class.
+     * The Dropbox SDK class that provides methods to read, write and
+     * create files or folders in a user or team's Dropbox.
      */
     constructor(options: DropboxOptions);
 

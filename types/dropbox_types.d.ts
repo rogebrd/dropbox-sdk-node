@@ -2,26 +2,30 @@ declare module DropboxTypes {
   interface DropboxAuthOptions {
     // An access token for making authenticated requests.
     accessToken?: string;
+    // The time at which the access token expires.
     accessTokenExpiresAt?: Date;
+    // A refresh token for retrieving access tokens
     refreshToken?: string;
     // The client id for your app. Used to create authentication URL.
     clientId?: string;
+    // The client secret for your app. Used for refresh and token exchange.
     clientSecret?: string;
   }
 
   class DropboxAuth {
     /**
-     * The Default Dropbox SDK class.
+     * The DropboxAuth class that provides methods to manage, acquire, and refresh tokens.
      */
     constructor();
 
     /**
-     * The Dropbox SDK class.
+     * The DropboxAuth class that provides methods to manage, acquire, and refresh tokens.
      */
     constructor(options: DropboxAuthOptions);
 
     /**
-     * Get the access token.
+     * Get the access token
+     * @returns {String} Access token
      */
     getAccessToken(): string;
 
@@ -35,15 +39,31 @@ declare module DropboxTypes {
 
     /**
      * Get a URL that can be used to authenticate users for the Dropbox API.
-     * @param redirectUri A URL to redirect the user to after authenticating.
-     *   This must be added to your app through the admin interface.
-     * @param state State that will be returned in the redirect URL to help
-     *   prevent cross site scripting attacks.
+     * @arg {String} redirectUri - A URL to redirect the user to after
+     * authenticating. This must be added to your app through the admin interface.
+     * @arg {String} [state] - State that will be returned in the redirect URL to help
+     * prevent cross site scripting attacks.
+     * @arg {String} [authType] - auth type, defaults to 'token', other option is 'code'
+     * @arg {String} [tokenAccessType] - type of token to request.  From the following:
+     * legacy - creates one long-lived token with no expiration
+     * online - create one short-lived token with an expiration
+     * offline - create one short-lived token with an expiration with a refresh token
+     * @arg {Array<String>} [scope] - scopes to request for the grant
+     * @arg {String} [includeGrantedScopes] - whether or not to include previously granted scopes.
+     * From the following:
+     * user - include user scopes in the grant
+     * team - include team scopes in the grant
+     * Note: if this user has never linked the app, include_granted_scopes must be None
+     * @arg {boolean} [usePKCE] - Whether or not to use Sha256 based PKCE. PKCE should be only use on
+     * client apps which doesn't call your server. It is less secure than non-PKCE flow but
+     * can be used if you are unable to safely retrieve your app secret
+     * @returns {String} Url to send user to for Dropbox API authentication
      */
-    getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code'): string;
+    getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code', tokenAccessType?: 'legacy' | 'offline' | 'online', scope?: Array<String>, includeGrantedScopes?: 'none' | 'user' | 'team', usePKCE?: boolean): string;
 
     /**
      * Get the client id
+     * @returns {String} Client id
      */
     getClientId(): string;
 
@@ -65,17 +85,44 @@ declare module DropboxTypes {
      */
     setClientSecret(clientSecret: string): void;
 
+    /**
+     * Sets the refresh token
+     * @param refreshToken - A refresh token
+     */
     setRefreshToken(refreshToken: string): void;
 
+    /**
+     * Gets the refresh token
+     * @returns {String} Refresh token
+     */
     getRefreshToken(): string;
 
+    /**
+     * Sets the access token's expiration date
+     * @param accessTokenExpiresAt - new expiration date
+     */
     setAccessTokenExpiresAt(accessTokenExpiresAt: Date): void;
 
+    /**
+     * Gets the access token's expiration date
+     * @returns {Date} date of token expiration
+    */
     getAccessTokenExpiresAt(): Date;
 
+    /**
+     * Checks if a token is needed, can be refreshed and if the token is expired.
+     * If so, attempts to refresh access token
+     * @returns {Promise<*>}
+     */
     checkAndRefreshAccessToken(): void;
 
-    refreshAccessToken(scope?: string): void;
+    /**
+     * Refreshes the access token using the refresh token, if available
+     * @arg {List} scope - a subset of scopes from the original
+     * refresh to acquire with an access token
+     * @returns {Promise<*>}
+     */
+    refreshAccessToken(scope?: Array<String>): void;
 
   }
 
