@@ -30,27 +30,31 @@ jobs:
         run: |
           git submodule init
           git submodule update --remote --recursive
-      - name: Generate Log
-        id: git-diff
+      - name: Generate Branch Name
+        id: git-branch
+        run: |
+          echo '::set-output branch=spec_update_' + ${{ steps.current-time.outputs.formattedTime }}
+      - name: Generate Num Diffs
+        id: git-diff-num
         run: |
           cd generator/
-          num_diffs = git diff --submodule dropbox-api-spec | grep "<" | wc -l
-          echo $num_diffs
-          cd dropbox-api-spec
-          diff = git log -n $num_diffs --pretty="format:%H %n%n %b"
-          echo "::set-output diff=" + $diff
+          echo "::set-output num-diff=" + git diff --submodule dropbox-api-spec | grep "<" | wc -l
+          cd ..
+      - name: Generate Diff
+        id: git-diff
+        run: |
+          cd generator/dropbox-api-spec
+          echo "::set-output diff=" + git log -n ${{ steps.git-diff-num.outputs.num-diff }} --pretty="format:%H %n%n %b"
           cd ../..
       - name: Generate New Routes & Create Diff
         run: |
-          branch_name = 'spec_update_' + ${{ steps.current-time.outputs.formattedTime }}
-          echo $branch_name
-          git checkout -b $branch_name
+          git checkout -b ${{ steps.git-branch.output.branch }}
           cd generator/stone
           python setup.py install
           cd ..
           python generate_routes.py
           cd ..
           git add .
-          git commit -m ${{steps.git-diff.outputs.diff}}
-          git push --set-upstream origin $branch_name
-          git request-pull master https://github.com/rogebrd/dropbox-sdk-node.git $branch_name
+          git commit -m ${{ steps.git-diff.outputs.diff }}
+          git push --set-upstream origin ${{ steps.git-branch.output.branch }}
+          git request-pull master https://github.com/rogebrd/dropbox-sdk-node.git ${{ steps.git-branch.output.branch }}
