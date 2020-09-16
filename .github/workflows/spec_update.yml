@@ -51,7 +51,6 @@ jobs:
           cd ../..
       - name: Generate New Routes
         run: |
-          git checkout -b ${{ steps.git-branch.outputs.branch }}
           cd generator/stone
           python setup.py install
           cd ..
