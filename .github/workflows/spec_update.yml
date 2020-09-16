@@ -46,7 +46,8 @@ jobs:
         run: |
           cd generator/dropbox-api-spec
           gitdiff=$(git log -n ${{ steps.git-diff-num.outputs.num-diff }} --pretty="format:%H %n%n %b")
-          echo "::set-output name=diff::$gitdiff"
+          diffmessage=$("Spec Update \n $gitdiff")
+          echo "::set-output name=diff::$diffmessage"
           cd ../..
       - name: Generate New Routes & Create Diff
         run: |
@@ -56,8 +57,10 @@ jobs:
           cd ..
           python generate_routes.py
           cd ..
-          echo "Post generate"
+          echo "Routes generated, committing now"
+          echo $(git diff)
           git add .
+          echo 
           git commit -m ${{ steps.git-diff.outputs.diff }}
           git push --set-upstream origin ${{ steps.git-branch.outputs.branch }}
           git request-pull master https://github.com/rogebrd/dropbox-sdk-node.git ${{ steps.git-branch.output.branch }}
