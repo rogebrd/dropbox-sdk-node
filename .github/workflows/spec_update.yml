@@ -49,7 +49,7 @@ jobs:
           diffmessage="\"Spec Update \n $gitdiff\""
           echo "::set-output name=diff::$diffmessage"
           cd ../..
-      - name: Generate New Routes & Create Diff
+      - name: Generate New Routes
         run: |
           git checkout -b ${{ steps.git-branch.outputs.branch }}
           cd generator/stone
@@ -57,9 +57,12 @@ jobs:
           cd ..
           python generate_routes.py
           cd ..
-          echo "Routes generated, committing now"
-          git add .
-          echo 
-          git commit -m ${{ steps.git-diff.outputs.diff }}
-          git push --set-upstream origin ${{ steps.git-branch.outputs.branch }}
-          git request-pull master https://github.com/rogebrd/dropbox-sdk-node.git ${{ steps.git-branch.output.branch }}
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3.3.0
+        with:
+          token: ${{ secrets.SPEC_UPDATE_TOKEN }}
+          commit-message: ${{ steps.git-diff.outputs.diff }}
+          branch: {{ steps.git-branch.outputs.branch }}
+          delete-branch: true
+          base: master
+          title: Automated Spec Update
