@@ -1,0 +1,61 @@
+name: Spec Update
+on: 
+    schedule:
+    - cron: 0 0 * * *
+
+jobs:
+  Update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python environment
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Setup Node.JS environment
+        uses: actions/setup-node@v2.1.1
+        with:
+          node-version: 14
+      - name: Get current time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYY_MM_DD
+          utcOffset: "-08:00"
+      - name: Install SDK
+        run: |
+          npm install
+      - name: Update Modules
+        run: |
+          git submodule --init
+          git submodule update --remote --recursive
+      - name: Generate Log
+        id: git-diff
+        run: |
+          cd generator/
+          num_diffs = git diff --submodule dropbox-api-spec | grep "<" | wc -l
+          echo $num_diffs
+          cd dropbox-api-spec
+          diff = git log -n $num_diffs --pretty="format:%H %n%n %b"
+          echo "::set-output diff=" + $diff
+          cd ../..
+      - name: Generate New Routes
+        run: |
+          branch_name = 'spec_update_' + ${{ steps.current-time.outputs.formattedTime }}
+          echo $branch_name
+          git checkout -b $branch_name
+          cd generator/stone
+          python setup.py install
+          cd ..
+          python generate_routes.py
+          cd ..
+      - name: Create Diff
+        run: |
+          git add .
+          git commit -m ${{steps.git-diff.outputs.diff}}
+          git push
+      - name: Publish Coverage
+        uses: codecov/codecov-action@v1.0.13
+        with:
+          flags: unit
+          fail_ci_if_error: true
