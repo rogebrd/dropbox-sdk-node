@@ -53,9 +53,7 @@ export default class Dropbox {
 
     Object.assign(this, routes);
   }
-
-  // TODO: What about sharing route that was defined here?
-
+  
   request(path, args, auth, host, style) {
     switch (style) {
       case RPC:
