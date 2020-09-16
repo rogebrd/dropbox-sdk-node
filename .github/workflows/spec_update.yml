@@ -62,7 +62,11 @@ jobs:
         with:
           token: ${{ secrets.SPEC_UPDATE_TOKEN }}
           commit-message: ${{ steps.git-diff.outputs.diff }}
-          branch: {{ steps.git-branch.outputs.branch }}
+          branch: ${{ steps.git-branch.outputs.branch }}
           delete-branch: true
-          base: master
-          title: Automated Spec Update
+          base: 'master'
+          title: 'Automated Spec Update'
+          team-reviewers: |
+            owners
+            maintainers
+          draft: false
