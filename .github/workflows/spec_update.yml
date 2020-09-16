@@ -33,12 +33,13 @@ jobs:
       - name: Generate Branch Name
         id: git-branch
         run: |
-          echo '::set-output branch=spec_update_' + ${{ steps.current-time.outputs.formattedTime }}
+          echo '::set-output branch=spec_update_${{ steps.current-time.outputs.formattedTime }}'
       - name: Generate Num Diffs
         id: git-diff-num
         run: |
           cd generator/
-          echo "::set-output num-diff=" + git diff --submodule dropbox-api-spec | grep "<" | wc -l
+          diffs=$(git diff --submodule dropbox-api-spec | grep "<" | wc -l)
+          echo "::set-output num-diff=$diffs"
           cd ..
       - name: Generate Diff
         id: git-diff
