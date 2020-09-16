@@ -1,3 +1,4 @@
+// Add comment to force a diff in spec update test
 declare module DropboxTypes {
   interface DropboxAuthOptions {
     // An access token for making authenticated requests.
