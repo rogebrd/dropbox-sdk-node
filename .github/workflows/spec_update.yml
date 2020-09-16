@@ -1,6 +1,5 @@
 name: Spec Update
 on: 
-  pull_request:
   schedule:
     - cron: 0 0 * * *
 
