@@ -46,7 +46,7 @@ jobs:
         run: |
           cd generator/dropbox-api-spec
           gitdiff=$(git log -n ${{ steps.git-diff-num.outputs.num-diff }} --pretty="format:%H %n%n %b")
-          diffmessage=$("Spec Update \n $gitdiff")
+          diffmessage="Spec Update \n $gitdiff"
           echo "::set-output name=diff::$diffmessage"
           cd ../..
       - name: Generate New Routes & Create Diff
