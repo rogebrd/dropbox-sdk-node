@@ -39,7 +39,7 @@ jobs:
           diff = git log -n $num_diffs --pretty="format:%H %n%n %b"
           echo "::set-output diff=" + $diff
           cd ../..
-      - name: Generate New Routes
+      - name: Generate New Routes & Create Diff
         run: |
           branch_name = 'spec_update_' + ${{ steps.current-time.outputs.formattedTime }}
           echo $branch_name
@@ -49,13 +49,7 @@ jobs:
           cd ..
           python generate_routes.py
           cd ..
-      - name: Create Diff
-        run: |
           git add .
           git commit -m ${{steps.git-diff.outputs.diff}}
-          git push
-      - name: Publish Coverage
-        uses: codecov/codecov-action@v1.0.13
-        with:
-          flags: unit
-          fail_ci_if_error: true
+          git push --set-upstream origin $branch_name
+          git request-pull master https://github.com/rogebrd/dropbox-sdk-node.git $branch_name
