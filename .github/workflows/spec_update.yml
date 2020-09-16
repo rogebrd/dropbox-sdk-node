@@ -50,7 +50,7 @@ jobs:
           cd ../..
       - name: Generate New Routes & Create Diff
         run: |
-          git checkout -b ${{ steps.git-branch.output.branch }}
+          git checkout -b ${{ steps.git-branch.outputs.branch }}
           cd generator/stone
           python setup.py install
           cd ..
@@ -58,5 +58,5 @@ jobs:
           cd ..
           git add .
           git commit -m ${{ steps.git-diff.outputs.diff }}
-          git push --set-upstream origin ${{ steps.git-branch.output.branch }}
+          git push --set-upstream origin ${{ steps.git-branch.outputs.branch }}
           git request-pull master https://github.com/rogebrd/dropbox-sdk-node.git ${{ steps.git-branch.output.branch }}
