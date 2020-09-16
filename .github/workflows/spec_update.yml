@@ -33,19 +33,20 @@ jobs:
       - name: Generate Branch Name
         id: git-branch
         run: |
-          echo '::set-output branch=spec_update_${{ steps.current-time.outputs.formattedTime }}'
+          ::set-output branch=spec_update_${{ steps.current-time.outputs.formattedTime }}
       - name: Generate Num Diffs
         id: git-diff-num
         run: |
           cd generator/
           diffs=$(git diff --submodule dropbox-api-spec | grep "<" | wc -l)
-          echo "::set-output num-diff=$diffs"
+          ::set-output num-diff=$diffs
           cd ..
       - name: Generate Diff
         id: git-diff
         run: |
           cd generator/dropbox-api-spec
-          echo "::set-output diff=" + git log -n ${{ steps.git-diff-num.outputs.num-diff }} --pretty="format:%H %n%n %b"
+          git-diff=$(git log -n ${{ steps.git-diff-num.outputs.num-diff }} --pretty="format:%H %n%n %b")
+          ::set-output diff=$git-diff
           cd ../..
       - name: Generate New Routes & Create Diff
         run: |
