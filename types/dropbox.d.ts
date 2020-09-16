@@ -5,6 +5,7 @@ declare module DropboxTypes {
     auth: DropboxAuth;
     // Select user is only used by team endpoints. It specifies which user the team access token should be acting as.
     selectUser?: string;
+    // Select admin
     selectAdmin?: string;
     // Root path used to access namespaces different from home namespace (team folders etc)
     pathRoot?: string;
