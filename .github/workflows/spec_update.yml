@@ -1,6 +1,7 @@
 name: Spec Update
 on: 
-    schedule:
+  pull-request:
+  schedule:
     - cron: 0 0 * * *
 
 jobs:
