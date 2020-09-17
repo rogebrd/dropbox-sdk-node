@@ -6,3 +6,5 @@ test/types/types_test.js
 test/types/types_test.js.map
 docs/**
 dist/
+es/
+cjs/
