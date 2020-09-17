@@ -111,23 +111,34 @@ if (!Array.prototype.includes) {
  * @classdesc The Dropbox SDK class that provides methods to read, write and
  * create files or folders in a user or team's Dropbox.
  * @arg {Object} options
+ * @arg {String} [options.selectUser] - Select user is only used for team functionality.
+ * It specifies which user the team access token should be acting as.
+ * @arg {String} [options.pathRoot] - root path to access other namespaces
+ * Use to access team folders for example
+ * @arg {String} [options.selectAdmin] - Select admin is only used by team functionality.
+ * It specifies which team admin the team access token should be acting as.
+ * @arg {DropboxAuth} [options.auth] - The DropboxAuth object used to authenticate requests.
+ * If this is set, the remaining parameters will be ignored.
  * @arg {String} [options.accessToken] - An access token for making authenticated
  * requests.
- * @arg {String} [options.clientId] - The client id for your app. Used to create
- * authentication URL.
- * @arg {String} [options.selectUser] - Select user is only used by DropboxTeam.
- * It specifies which user the team access token should be acting as.
- * @arg {String} [options.pathRoot] - root pass to access other namespaces
- * Use to access team folders for example
- * @arg {String} [options.refreshToken] - A refresh token for retrieving access tokens
  * @arg {Date} [options.AccessTokenExpiresAt] - Date of the current access token's
  * expiration (if available)
+ * @arg {String} [options.refreshToken] - A refresh token for retrieving access tokens
+ * @arg {String} [options.clientId] - The client id for your app. Used to create
+ * authentication URL.
+ * @arg {String} [options.clientSecret] - The client secret for your app. Used to create
+ * authentication URL and refresh access tokens.
  */
 export default class Dropbox {
   constructor(options) {
     options = options || {};
 
-    this.auth = new DropboxAuth(options);
+    if (options.auth) {
+      this.auth = options.auth;
+    } else {
+      this.auth = new DropboxAuth(options);
+    }
+
     this.selectUser = options.selectUser;
     this.selectAdmin = options.selectAdmin;
     this.pathRoot = options.pathRoot;

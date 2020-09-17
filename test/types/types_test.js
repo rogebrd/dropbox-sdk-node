@@ -6,13 +6,12 @@
  * and to perform a basic sanity check that types are exported as intended.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var Dropbox = require("../../types/dropbox-sdk"); // eslint-disable-line
-var DropboxAuth = Dropbox.DropboxAuth;
+var Dropbox = require("../../types/dropbox"); // eslint-disable-line
 // Check DropboxAuth Constructor and Methods
 // Test default constructor
-var dropboxAuth = new DropboxAuth();
+var dropboxAuth = new Dropbox.DropboxAuth();
 // Test config constructor
-dropboxAuth = new DropboxAuth({
+dropboxAuth = new Dropbox.DropboxAuth({
     accessToken: 'myToken',
     accessTokenExpiresAt: new Date(Date.now()),
     refreshToken: 'myToken',
@@ -33,10 +32,11 @@ dropboxAuth.setClientSecret('myClientSecret');
 dropboxAuth.getAuthenticationUrl('myRedirect');
 dropboxAuth.getAuthenticationUrl('myRedirect', 'myState');
 dropboxAuth.getAuthenticationUrl('myRedirect', 'myState', 'code');
+dropboxAuth.getAuthenticationUrl('myRedirect', 'mystate', 'code', 'offline', ['scope', 'scope'], 'none', false);
 dropboxAuth.getAccessTokenFromCode('myRedirect', 'myCode');
 dropboxAuth.checkAndRefreshAccessToken();
 dropboxAuth.refreshAccessToken();
-dropboxAuth.refreshAccessToken('files.metadata.read files.metadata.write');
+dropboxAuth.refreshAccessToken(['files.metadata.read', 'files.metadata.write']);
 // Check Dropbox Constructor or Methods
 // Test config constructor
 var dropbox = new Dropbox.Dropbox({
@@ -45,4 +45,15 @@ var dropbox = new Dropbox.Dropbox({
     selectAdmin: '',
     pathRoot: '',
 });
+var dropbox2 = new Dropbox.Dropbox({
+    accessToken: 'myToken',
+    accessTokenExpiresAt: new Date(Date.now()),
+    refreshToken: 'myToken',
+    clientId: 'myClientId',
+    clientSecret: 'myClientSecret',
+    selectUser: '',
+    selectAdmin: '',
+    pathRoot: '',
+});
 dropbox.usersGetCurrentAccount();
+dropbox2.usersGetCurrentAccount();

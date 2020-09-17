@@ -24,6 +24,20 @@ const IncludeGrantedScopes = ['none', 'user', 'team'];
 const BaseAuthorizeUrl = 'https://www.dropbox.com/oauth2/authorize';
 const BaseTokenUrl = 'https://api.dropboxapi.com/oauth2/token';
 
+/**
+ * @class DropboxAuth
+ * @classdesc The DropboxAuth class that provides methods to manage, acquire, and refresh tokens.
+ * @arg {Object} options
+ * @arg {String} [options.accessToken] - An access token for making authenticated
+ * requests.
+ * @arg {Date} [options.AccessTokenExpiresAt] - Date of the current access token's
+ * expiration (if available)
+ * @arg {String} [options.refreshToken] - A refresh token for retrieving access tokens
+ * @arg {String} [options.clientId] - The client id for your app. Used to create
+ * authentication URL.
+ * @arg {String} [options.clientSecret] - The client secret for your app. Used to create
+ * authentication URL and refresh access tokens.
+ */
 export default class DropboxAuth {
   constructor(options) {
     options = options || {};
@@ -271,7 +285,7 @@ export default class DropboxAuth {
 
   /**
    * Refreshes the access token using the refresh token, if available
-   * @arg {List} scope - a subset of scopes from the original
+   * @arg {Array<String>} scope - a subset of scopes from the original
    * refresh to acquire with an access token
    * @returns {Promise<*>}
    */

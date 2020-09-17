@@ -95,7 +95,7 @@ def main():
     subprocess.check_output(
         (['python', '-m', 'stone.cli', 'tsd_types', typescript_template_path] +
          specs + ['-b', 'team'] + ['-a', 'host', '-a', 'style'] +
-         ['--', 'dropbox_types.d.tstemplate', 'dropbox_types.d.ts', '-e', json.dumps(upload_arg)]),
+         ['--', 'dropbox_types.d.tstemplate', 'dropbox_types.d.ts', '-e', json.dumps(upload_arg), '--export-namespaces']),
         cwd=stone_path)
 
     if verbose:
