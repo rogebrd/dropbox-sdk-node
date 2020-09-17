@@ -868,7 +868,7 @@ export class Dropbox {
      * the temporary upload link must have its Content-Type set to
      * "application/octet-stream".  Example temporary upload link consumption
      * request:  curl -X POST
-     * https://content.dropboxapi.com/apitul/1/bNi2uIYF51cVBND --header
+     * https://dl.dropboxusercontent.com/apitul/1/bNi2uIYF51cVBND --header
      * "Content-Type: application/octet-stream" --data-binary @local_file.txt  A
      * successful temporary upload link consumption request returns the content
      * hash of the uploaded data in JSON format.  Example succesful temporary
@@ -1181,9 +1181,8 @@ export class Dropbox {
     public filesSaveUrlCheckJobStatus(arg: async.PollArg): Promise<files.SaveUrlJobStatus>;
 
     /**
-     * Searches for files and folders. Note: Recent changes will be reflected in
-     * search results within a few seconds and older revisions of existing files
-     * may still match your query for up to a few days.
+     * Searches for files and folders. Note: Recent changes may not immediately
+     * be reflected in search results due to a short delay in indexing.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<files.SearchError>.
@@ -2322,8 +2321,7 @@ export class Dropbox {
     public teamGroupsUpdate(arg: team.GroupUpdateArgs): Promise<team.GroupFullInfo>;
 
     /**
-     * Creates new legal hold policy. Note: Legal Holds is a paid add-on. Not
-     * all teams have the feature. Permission : Team member file access.
+     * Creates new legal hold policy. Permission : Team member file access.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.LegalHoldsPolicyCreateError>.
@@ -2332,8 +2330,7 @@ export class Dropbox {
     public teamLegalHoldsCreatePolicy(arg: team.LegalHoldsPolicyCreateArg): Promise<team.LegalHoldsPolicyCreateResult>;
 
     /**
-     * Gets a legal hold by Id. Note: Legal Holds is a paid add-on. Not all
-     * teams have the feature. Permission : Team member file access.
+     * Gets a legal hold by Id. Permission : Team member file access.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.LegalHoldsGetPolicyError>.
@@ -2342,10 +2339,6 @@ export class Dropbox {
     public teamLegalHoldsGetPolicy(arg: team.LegalHoldsGetPolicyArg): Promise<team.LegalHoldsGetPolicyResult>;
 
     /**
-     * List the file metadata that's under the hold. Note: Legal Holds is a paid
-     * add-on. Not all teams have the feature. Permission : Team member file
-     * access.
-     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.LegalHoldsListHeldRevisionsError>.
      * @param arg The request parameters.
@@ -2353,10 +2346,6 @@ export class Dropbox {
     public teamLegalHoldsListHeldRevisions(arg: team.LegalHoldsListHeldRevisionsArg): Promise<team.LegalHoldsListHeldRevisionResult>;
 
     /**
-     * Continue listing the file metadata that's under the hold. Note: Legal
-     * Holds is a paid add-on. Not all teams have the feature. Permission : Team
-     * member file access.
-     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.LegalHoldsListHeldRevisionsError>.
      * @param arg The request parameters.
@@ -2364,8 +2353,7 @@ export class Dropbox {
     public teamLegalHoldsListHeldRevisionsContinue(arg: team.LegalHoldsListHeldRevisionsContinueArg): Promise<team.LegalHoldsListHeldRevisionResult>;
 
     /**
-     * Lists legal holds on a team. Note: Legal Holds is a paid add-on. Not all
-     * teams have the feature. Permission : Team member file access.
+     * Lists legal holds on a team. Permission : Team member file access.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.LegalHoldsListPoliciesError>.
@@ -2374,8 +2362,7 @@ export class Dropbox {
     public teamLegalHoldsListPolicies(arg: team.LegalHoldsListPoliciesArg): Promise<team.LegalHoldsListPoliciesResult>;
 
     /**
-     * Releases a legal hold by Id. Note: Legal Holds is a paid add-on. Not all
-     * teams have the feature. Permission : Team member file access.
+     * Releases a legal hold by Id. Permission : Team member file access.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.LegalHoldsPolicyReleaseError>.
@@ -2384,8 +2371,7 @@ export class Dropbox {
     public teamLegalHoldsReleasePolicy(arg: team.LegalHoldsPolicyReleaseArg): Promise<void>;
 
     /**
-     * Updates a legal hold. Note: Legal Holds is a paid add-on. Not all teams
-     * have the feature. Permission : Team member file access.
+     * Updates a legal hold. Permission : Team member file access.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.LegalHoldsPolicyUpdateError>.

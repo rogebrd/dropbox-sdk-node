@@ -41,7 +41,7 @@ export default class Dropbox {
   constructor(options) {
     options = options || {};
 
-    if(options.auth){
+    if (options.auth) {
       this.auth = options.auth;
     } else {
       this.auth = new DropboxAuth(options);
@@ -53,7 +53,7 @@ export default class Dropbox {
 
     Object.assign(this, routes);
   }
-  
+
   request(path, args, auth, host, style) {
     switch (style) {
       case RPC:
