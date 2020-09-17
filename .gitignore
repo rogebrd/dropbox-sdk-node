@@ -1,5 +1,10 @@
+# IDE config folders
 .idea/
 
+#Output Directories
+es/
+cjs/
+umd/
 
 # Logs
 logs

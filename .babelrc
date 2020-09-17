@@ -1,4 +1,25 @@
 {
   "presets": ["@babel/preset-env"],
-  "plugins": ["istanbul"]
+  "env": {
+    "coverage": {
+      "plugins": ["istanbul"]
+    },
+    "commonjs": {
+      "presets": [[
+        "@babel/preset-env", {
+          "modules": "cjs"
+        }
+      ]],
+      "plugins": [
+        ["transform-es2015-modules-commonjs", { "noInterop": true }]
+      ]
+    },
+    "es": {
+      "presets": [[
+        "@babel/preset-env", {
+          "modules": false
+        }
+      ]]
+    }
+  }
 }
