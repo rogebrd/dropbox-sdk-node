@@ -38,7 +38,8 @@ jobs:
         id: git-diff-num
         run: |
           cd generator/
-          diffs=$(git diff --submodule dropbox-api-spec | grep "<" | wc -l)
+          diffs=$(git diff --submodule dropbox-api-spec | grep ">" | wc -l)
+          echo "$diffs"
           echo "::set-output name=num-diff::$diffs"
           cd ..
       - name: Generate Diff
@@ -47,6 +48,7 @@ jobs:
           cd generator/dropbox-api-spec
           gitdiff=$(git log -n ${{ steps.git-diff-num.outputs.num-diff }} --pretty="format:%H %n%n %b")
           diffmessage="\"Spec Update \n $gitdiff\""
+          echo "$diffmessage"
           echo "::set-output name=diff::$diffmessage"
           cd ../..
       - name: Generate New Routes
