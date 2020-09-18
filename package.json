@@ -2,9 +2,12 @@
   "name": "dropbox-sdk-js",
   "version": "6.0.0",
   "description": "The Dropbox JavaScript SDK is a lightweight, promise based interface to the Dropbox v2 API that works in both nodejs and browser environments.",
-  "main": "index.js",
+  "main": "cjs/index.js",
   "browser": "dist/Dropbox-sdk.min.js",
-  "types": "types/dropbox.d.ts",
+  "typings": "types/dropbox",
+  "types": "types/dropbox",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
   "scripts": {
     "build:es": "cross-env BABEL_ENV=es babel src -d es/src; cross-env BABEL_ENV=es babel lib -d es/lib; cross-env BABEL_ENV=es babel index.js -d es; babel types/*.d.ts -d es --copy-files",
     "build:cjs": "cross-env BABEL_ENV=commonjs babel src -d cjs/src; cross-env BABEL_ENV=commonjs babel lib -d cjs/lib; cross-env BABEL_ENV=commonjs babel index.js -d cjs; babel types/*.d.ts -d cjs --copy-files",
@@ -31,7 +34,7 @@
     "es",
     "generator",
     "src",
-    "conf.json",
+    ".jsdoc.json",
     "*.config.js"
   ],
   "keywords": [
@@ -60,7 +63,7 @@
   },
   "contributors": [
     "Brad Rogers <brad12rogers@gmail.com>",
-    "Andrew Lawson <>",
+    "Andrew Lawson <alawson@dropbox.com>",
     "James Sidhu <james.thomas.sidhu@gmail.com>",
     "John Vilk <jvilk@cs.umass.edu>",
     "Steve Klebanoff <steve.klebanoff@gmail.com>",

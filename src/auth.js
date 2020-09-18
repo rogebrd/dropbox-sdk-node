@@ -1,5 +1,3 @@
-import crypto from 'crypto';
-
 let fetch;
 try {
   fetch = require('node-fetch'); // eslint-disable-line global-require
@@ -11,7 +9,7 @@ let crypto;
 try {
   crypto = require('crypto'); // eslint-disable-line global-require
 } catch (Exception) {
-  crypto = window.crypto;
+  crypto = window.crypto || window.msCrypto; // for IE11
 }
 
 import { getTokenExpiresAtDate } from './utils.js';
@@ -40,7 +38,7 @@ const BaseTokenUrl = 'https://api.dropboxapi.com/oauth2/token';
  * @arg {String} [options.clientSecret] - The client secret for your app. Used to create
  * authentication URL and refresh access tokens.
  */
-export class DropboxAuth {
+export default class DropboxAuth {
   constructor(options) {
     options = options || {};
 

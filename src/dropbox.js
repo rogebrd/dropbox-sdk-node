@@ -8,7 +8,7 @@ import {
   NO_AUTH,
 } from './constants.js';
 import { routes } from '../lib/routes.js';
-import { DropboxAuth } from './auth.js';
+import DropboxAuth from './auth.js';
 import { getBaseURL, httpHeaderSafeJson } from './utils.js';
 import { parseDownloadResponse, parseResponse } from './response.js';
 

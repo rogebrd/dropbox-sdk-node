@@ -12,7 +12,7 @@ const port = process.env.PORT || 8080;
 app.get(
   '/__build__/Dropbox-sdk.min.js',
   rollup.serve({
-    entry: path.resolve(__dirname, '../../dist/Dropbox-sdk.min.js'),
+    entry: path.resolve(__dirname, '../../dist/Dropbox-sdk.js'),
     // plugins: [
     //   babel(),
     //   terser({

@@ -2,7 +2,7 @@ import chai from 'chai';
 import sinon from 'sinon';
 
 import { RPC, USER_AUTH } from '../../src/constants.js';
-import Dropbox from '../../index.js';
+import { Dropbox } from '../../index.js';
 
 describe('Dropbox', () => {
   describe('selectUser', () => {
