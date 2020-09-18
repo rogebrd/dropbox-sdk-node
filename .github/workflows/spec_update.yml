@@ -39,17 +39,20 @@ jobs:
         run: |
           cd generator/
           diffs=$(git diff --submodule dropbox-api-spec | grep ">" | wc -l)
-          echo "$diffs"
+          echo "Number of Spec diffs: $diffs"
           echo "::set-output name=num-diff::$diffs"
           cd ..
       - name: Generate Diff
         id: git-diff
         run: |
           cd generator/dropbox-api-spec
-          gitdiff=$(git log -n ${{ steps.git-diff-num.outputs.num-diff }} --pretty="format:%H %n%n %b")
-          diffmessage="\"Spec Update \n $gitdiff\""
-          echo "$diffmessage"
-          echo "::set-output name=diff::$diffmessage"
+          gitdiff=$(git log -n ${{ steps.git-diff-num.outputs.num-diff }} --pretty="format:%n %H %n%n %b")
+          commit="Automated Spec Update $gitdiff"
+          commit="${commit//'%'/'%25'}"
+          commit="${commit//$'\n'/'%0A'}"
+          commit="${commit//$'\r'/'%0D'}"
+          echo "Commit Message: $commit"
+          echo "::set-output name=commit::$commit"
           cd ../..
       - name: Generate New Routes
         run: |
@@ -63,11 +66,14 @@ jobs:
         if: steps.git-diff-num.outputs.num-diff != 0
         with:
           token: ${{ secrets.SPEC_UPDATE_TOKEN }}
-          commit-message: ${{ steps.git-diff.outputs.diff }}
+          commit-message: |
+            ${{ steps.git-diff.outputs.commit}}
           branch: ${{ steps.git-branch.outputs.branch }}
           delete-branch: true
-          base: 'master'
           title: 'Automated Spec Update'
+          body: |
+            ${{ steps.git-diff.outputs.commit}}
+          base: 'master'
           team-reviewers: |
             owners
             maintainers
