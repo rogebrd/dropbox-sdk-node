@@ -1,5 +1,18 @@
 import crypto from 'crypto';
-import fetch from 'node-fetch';
+
+let fetch;
+try {
+  fetch = require('node-fetch'); // eslint-disable-line global-require
+} catch (Exception) {
+  fetch = window.fetch;
+}
+
+let crypto;
+try {
+  crypto = require('crypto'); // eslint-disable-line global-require
+} catch (Exception) {
+  crypto = window.crypto;
+}
 
 import { getTokenExpiresAtDate } from './utils.js';
 import { parseResponse } from './response.js';
