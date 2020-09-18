@@ -1,5 +1,5 @@
 const prompt = require('prompt');
-const { Dropbox } = require('../../../lib/dropbox');
+const { Dropbox } = require('../../../cjs/dropbox');
 
 prompt.start();
 
