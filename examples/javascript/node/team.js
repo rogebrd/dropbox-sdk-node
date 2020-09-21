@@ -1,5 +1,5 @@
 const prompt = require('prompt');
-const { DropboxTeam } = require('../../../cjs/dropbox');
+const { DropboxTeam } = require('../../../cjs/dropbox'); // eslint-disable-line import/no-unresolved
 
 prompt.start();
 

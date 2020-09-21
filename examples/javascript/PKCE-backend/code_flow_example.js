@@ -1,11 +1,9 @@
-
-
 // Standalone example to demonstrate codeflow.
 // Start the server, hit localhost:3000 on the browser, and click through.
 // On the server logs, you should have the auth code, as well as the token
 // from exchanging it. This exchange is invisible to the app user
 
-let fetch = require('isomorphic-fetch');
+const fetch = require('node-fetch');
 const app = require('express')();
 
 const hostname = 'localhost';
@@ -17,9 +15,9 @@ const config = {
   clientId: [clientId],
 };
 
-const {Dropbox} = require('dropbox');
+const { Dropbox } = require('dropbox');
 
-let dbx = new Dropbox(config);
+const dbx = new Dropbox(config);
 
 const redirectUri = `http://${hostname}:${port}/auth`;
 const authUrl = dbx.getAuthenticationUrl(redirectUri, null, 'code', 'offline', null, 'none', true);
@@ -29,26 +27,24 @@ app.get('/', (req, res) => {
   res.end();
 });
 
-app.get('/auth', (req, res) => {
-  const {code} = req.query;
-  console.log(`code:${  code}`);
-  let options = {code,
-    redirectUri, ...config};
+app.get('/auth', (req, res) => { // eslint-disable-line no-unused-vars
+  const { code } = req.query;
+  console.log(`code:${code}`);
 
   dbx.getAccessTokenFromCode(redirectUri, code)
     .then((token) => {
-        console.log('Token Result:' + JSON.stringify(token));
-        dbx.setRefreshToken(token.refreshToken);
-        dbx.usersGetCurrentAccount()
-          .then(function(response) {
-            console.log('response', response)
-          })
-          .catch(function(error) {
-            console.error(error);
-          });
+      console.log(`Token Result:${JSON.stringify(token)}`);
+      dbx.setRefreshToken(token.refreshToken);
+      dbx.usersGetCurrentAccount()
+        .then((response) => {
+          console.log('response', response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     })
     .catch((error) => {
-        console.log(error);
+      console.log(error);
     });
 });
 

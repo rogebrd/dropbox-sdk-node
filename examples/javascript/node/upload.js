@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const prompt = require('prompt');
-const { Dropbox } = require('../../../cjs/dropbox');
+const { Dropbox } = require('../../../cjs/dropbox'); // eslint-disable-line import/no-unresolved
 
 prompt.start();
 
@@ -24,8 +24,8 @@ prompt.get({
       .then((response) => {
         console.log(response);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((uploadErr) => {
+        console.log(uploadErr);
       });
   });
 });

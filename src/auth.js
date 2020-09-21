@@ -1,3 +1,6 @@
+import { getTokenExpiresAtDate } from './utils.js';
+import { parseResponse } from './response.js';
+
 let fetch;
 try {
   fetch = require('node-fetch'); // eslint-disable-line global-require
@@ -11,9 +14,6 @@ try {
 } catch (Exception) {
   crypto = window.crypto || window.msCrypto; // for IE11
 }
-
-import { getTokenExpiresAtDate } from './utils.js';
-import { parseResponse } from './response.js';
 
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
 const TokenExpirationBuffer = 300 * 1000;
