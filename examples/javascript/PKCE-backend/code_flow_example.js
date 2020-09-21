@@ -8,14 +8,13 @@ const app = require('express')();
 
 const hostname = 'localhost';
 const port = 3000;
-// const https = require('https');
 
 const config = {
   fetch,
   clientId: [clientId],
 };
 
-const { Dropbox } = require('dropbox');
+const { Dropbox } = require('../../../cjs/dropbox'); // eslint-disable-line import/no-unresolved
 
 const dbx = new Dropbox(config);
 
