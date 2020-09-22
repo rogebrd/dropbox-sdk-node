@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-
 import {
   UPLOAD,
   DOWNLOAD,
@@ -10,9 +8,16 @@ import {
   NO_AUTH,
 } from './constants.js';
 import { routes } from '../lib/routes.js';
-import { DropboxAuth } from './auth.js';
+import DropboxAuth from './auth.js';
 import { getBaseURL, httpHeaderSafeJson } from './utils.js';
 import { parseDownloadResponse, parseResponse } from './response.js';
+
+let fetch;
+try {
+  fetch = require('node-fetch'); // eslint-disable-line global-require
+} catch (Exception) {
+  fetch = window.fetch;
+}
 
 /**
  * @class Dropbox

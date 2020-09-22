@@ -1,8 +1,19 @@
-import crypto from 'crypto';
-import fetch from 'node-fetch';
-
 import { getTokenExpiresAtDate } from './utils.js';
 import { parseResponse } from './response.js';
+
+let fetch;
+try {
+  fetch = require('node-fetch'); // eslint-disable-line global-require
+} catch (Exception) {
+  fetch = window.fetch;
+}
+
+let crypto;
+try {
+  crypto = require('crypto'); // eslint-disable-line global-require
+} catch (Exception) {
+  crypto = window.crypto || window.msCrypto; // for IE11
+}
 
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
 const TokenExpirationBuffer = 300 * 1000;
@@ -27,7 +38,7 @@ const BaseTokenUrl = 'https://api.dropboxapi.com/oauth2/token';
  * @arg {String} [options.clientSecret] - The client secret for your app. Used to create
  * authentication URL and refresh access tokens.
  */
-export class DropboxAuth {
+export default class DropboxAuth {
   constructor(options) {
     options = options || {};
 

@@ -1,7 +1,6 @@
 import chai from 'chai';
 
-import { DropboxAuth } from '../../src/auth.js';
-import Dropbox from '../../index.js';
+import { Dropbox, DropboxAuth } from '../../index.js';
 
 describe('DropboxAuth', () => {
   describe('accessToken', () => {

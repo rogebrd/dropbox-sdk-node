@@ -1,6 +1,6 @@
 import chai from 'chai';
 
-import Dropbox from '../../index.js';
+import { Dropbox } from '../../index.js';
 import { DropboxResponse } from '../../src/response.js';
 
 describe('Team', () => {
