@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", { value: true });
-const DropboxTeam = require("../../../src/team");
+const Dropbox = require("../../../");
 const prompt = require('prompt');
 prompt.start();
 prompt.get({
@@ -12,9 +12,8 @@ prompt.get({
         }
     }
 }, function (error, result) {
-    var dbx = new DropboxTeam({ accessToken: result.accessToken });
-    var dbxUser = dbx.actAsUser(result.userId);
-    dbxUser.filesListFolder({ path: '' })
+    var dbx = new Dropbox.Dropbox({ accessToken: result.accessToken, selectUser: result.userId });
+    dbx.filesListFolder({ path: '' })
         .then(function (response) {
         console.log(response);
     })

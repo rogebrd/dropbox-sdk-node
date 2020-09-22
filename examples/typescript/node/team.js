@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", { value: true });
-const DropboxTeam = require("../../../src/team");
+const Dropbox = require("../../../");
 const prompt = require('prompt');
 prompt.start();
 prompt.get({
@@ -9,7 +9,7 @@ prompt.get({
         }
     }
 }, function (error, result) {
-    var dbx = new DropboxTeam({ accessToken: result.accessToken });
+    var dbx = new Dropbox.Dropbox({ accessToken: result.accessToken });
     dbx.teamDevicesListTeamDevices({})
         .then(function (response) {
         console.log('Devices', response);

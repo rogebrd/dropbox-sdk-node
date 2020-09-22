@@ -24,7 +24,7 @@ prompt.get({
       .then(function (response) {
         console.log(response);
       })
-      .catch(function (err: DropboxTypes.Error<DropboxTypes.files.UploadError>) {
+      .catch(function (err: Dropbox.Error<Dropbox.files.UploadError>) {
         console.log(err);
       });
   });

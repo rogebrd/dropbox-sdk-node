@@ -9,8 +9,8 @@
   "module": "es/index.js",
   "jsnext:main": "es/index.js",
   "scripts": {
-    "build:es": "cross-env BABEL_ENV=es babel src -d es/src; cross-env BABEL_ENV=es babel lib -d es/lib; cross-env BABEL_ENV=es babel index.js -d es; babel types/*.d.ts -d es --copy-files",
-    "build:cjs": "cross-env BABEL_ENV=commonjs babel src -d cjs/src; cross-env BABEL_ENV=commonjs babel lib -d cjs/lib; cross-env BABEL_ENV=commonjs babel index.js -d cjs; babel types/*.d.ts -d cjs --copy-files",
+    "build:es": "cross-env BABEL_ENV=es babel src -d es/src; cross-env BABEL_ENV=es babel lib -d es/lib; cross-env BABEL_ENV=es babel index.js -d es",
+    "build:cjs": "cross-env BABEL_ENV=commonjs babel src -d cjs/src; cross-env BABEL_ENV=commonjs babel lib -d cjs/lib; cross-env BABEL_ENV=commonjs babel index.js -d cjs",
     "build:umd": "cross-env BABEL_ENV=es BUNDLE_TYPE=normal rollup -c -i index.js -o dist/Dropbox-sdk.js -n Dropbox; babel types/*.d.ts -d dist --copy-files",
     "build:umd:min": "cross-env BABEL_ENV=es BUNDLE_TYPE=minified rollup -c -i index.js -o dist/Dropbox-sdk.min.js -n Dropbox",
     "build": "npm run build:es && npm run build:cjs && npm run build:umd && npm run build:umd:min",
@@ -21,6 +21,7 @@
     "test:integration": "./node_modules/.bin/mocha --timeout 10000 --require @babel/register test/integration/**/*.js",
     "test:unit": "./node_modules/.bin/mocha --require @babel/register test/unit/**/*.js",
     "report": "nyc report --reporter=lcov --reporter=text",
+    "clean": "rm -rf dist es cjs",
     "generate-docs": "jsdoc -c ./.jsdoc.json",
     "publish-docs": "rm -rf docs && npm run generate-docs && gh-pages -d docs",
     "coverage:unit": "cross-env BABEL_ENV=coverage nyc --reporter=lcov npm run test:unit",

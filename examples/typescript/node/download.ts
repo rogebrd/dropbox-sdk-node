@@ -25,7 +25,7 @@ prompt.get({
         console.log('File: ' + data.name + ' saved.');
       });
     })
-    .catch(function (err: DropboxTypes.Error<DropboxTypes.sharing.GetSharedLinkFileError>) {
+    .catch(function (err: Dropbox.Error<Dropbox.sharing.GetSharedLinkFileError>) {
       throw err;
     });
 });

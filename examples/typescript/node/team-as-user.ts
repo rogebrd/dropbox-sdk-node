@@ -1,4 +1,4 @@
-import DropboxTeam = require('../../../src/team');
+import Dropbox = require('../../../');
 const prompt = require('prompt');
 
 prompt.start();
@@ -13,13 +13,12 @@ prompt.get({
     }
   }
 }, function (error: any, result: any) {
-  var dbx = new DropboxTeam({ accessToken: result.accessToken });
-  var dbxUser = dbx.actAsUser(result.userId);
-  dbxUser.filesListFolder({ path: '' })
-    .then(function (response) {
+  var dbx = new Dropbox.Dropbox({ accessToken: result.accessToken, selectUser: result.userId});
+  dbx.filesListFolder({ path: '' })
+    .then(function (response: any) {
       console.log(response);
     })
-    .catch(function (err: DropboxTypes.Error<DropboxTypes.files.ListFolderError>) {
+    .catch(function (err: Dropbox.Error<Dropbox.files.ListFolderError>) {
       console.log(err);
     });
 });
