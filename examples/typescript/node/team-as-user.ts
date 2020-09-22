@@ -1,4 +1,5 @@
-import Dropbox = require('../../../');
+import { Dropbox, Error, files } from 'dropbox'; // eslint-disable-line no-unused-vars
+
 const prompt = require('prompt');
 
 prompt.start();
@@ -6,19 +7,19 @@ prompt.start();
 prompt.get({
   properties: {
     accessToken: {
-      description: 'Please enter an API V2 team access token'
+      description: 'Please enter an API V2 team access token',
     },
     userId: {
-      description: 'Please enter the id of the user you would like to act as'
-    }
-  }
-}, function (error: any, result: any) {
-  var dbx = new Dropbox.Dropbox({ accessToken: result.accessToken, selectUser: result.userId});
+      description: 'Please enter the id of the user you would like to act as',
+    },
+  },
+}, (error: any, result: any) => {
+  const dbx = new Dropbox({ accessToken: result.accessToken, selectUser: result.userId });
   dbx.filesListFolder({ path: '' })
-    .then(function (response: any) {
+    .then((response: any) => {
       console.log(response);
     })
-    .catch(function (err: Dropbox.Error<Dropbox.files.ListFolderError>) {
+    .catch((err: Error<files.ListFolderError>) => {
       console.log(err);
     });
 });

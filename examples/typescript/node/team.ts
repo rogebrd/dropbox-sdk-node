@@ -1,4 +1,5 @@
-import Dropbox = require('../../../');
+import { Dropbox, Error, team } from 'dropbox'; // eslint-disable-line no-unused-vars
+
 const prompt = require('prompt');
 
 prompt.start();
@@ -6,16 +7,16 @@ prompt.start();
 prompt.get({
   properties: {
     accessToken: {
-      description: 'Please enter an API V2 team access token'
-    }
-  }
-}, function (error: any, result: any) {
-  var dbx = new Dropbox.Dropbox({ accessToken: result.accessToken });
+      description: 'Please enter an API V2 team access token',
+    },
+  },
+}, (error: any, result: any) => {
+  const dbx = new Dropbox({ accessToken: result.accessToken });
   dbx.teamDevicesListTeamDevices({})
-    .then(function (response) {
+    .then((response) => {
       console.log('Devices', response);
     })
-    .catch(function (err: Dropbox.Error<Dropbox.team.ListTeamDevicesError>) {
+    .catch((err: Error<team.ListTeamDevicesError>) => {
       console.log(err);
     });
 });

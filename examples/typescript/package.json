@@ -18,6 +18,9 @@
     "type": "git",
     "url": "git+https://github.com/dropbox/dropbox-sdk-js.git"
   },
+  "dependencies": {
+    "dropbox": "file:../../"
+  },
   "devDependencies": {
     "@types/express": "^4.17.8",
     "@types/node": "^14.11.2",

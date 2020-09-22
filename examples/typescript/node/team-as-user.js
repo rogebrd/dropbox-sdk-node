@@ -1,23 +1,23 @@
 Object.defineProperty(exports, "__esModule", { value: true });
-const Dropbox = require("../../../");
+const dropbox_1 = require("dropbox");
 const prompt = require('prompt');
 prompt.start();
 prompt.get({
     properties: {
         accessToken: {
-            description: 'Please enter an API V2 team access token'
+            description: 'Please enter an API V2 team access token',
         },
         userId: {
-            description: 'Please enter the id of the user you would like to act as'
-        }
-    }
-}, function (error, result) {
-    var dbx = new Dropbox.Dropbox({ accessToken: result.accessToken, selectUser: result.userId });
+            description: 'Please enter the id of the user you would like to act as',
+        },
+    },
+}, (error, result) => {
+    const dbx = new dropbox_1.Dropbox({ accessToken: result.accessToken, selectUser: result.userId });
     dbx.filesListFolder({ path: '' })
-        .then(function (response) {
+        .then((response) => {
         console.log(response);
     })
-        .catch(function (err) {
+        .catch((err) => {
         console.log(err);
     });
 });

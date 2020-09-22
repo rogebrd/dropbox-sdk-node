@@ -8,3 +8,5 @@ docs/**
 dist/
 es/
 cjs/
+examples/typescript/**/*.js
+examples/typescript/**/*.js.map
