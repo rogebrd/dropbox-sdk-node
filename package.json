@@ -23,7 +23,6 @@
     "report": "nyc report --reporter=lcov --reporter=text",
     "clean": "rm -rf dist es cjs",
     "generate-docs": "jsdoc -c ./.jsdoc.json",
-    "publish-docs": "rm -rf docs && npm run generate-docs && gh-pages -d docs",
     "coverage:unit": "cross-env BABEL_ENV=coverage nyc --reporter=lcov npm run test:unit",
     "coverage:integration": "cross-env BABEL_ENV=coverage nyc --reporter=lcov npm run test:integration"
   },

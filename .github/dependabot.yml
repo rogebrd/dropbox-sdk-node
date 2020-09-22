@@ -5,8 +5,14 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  # Updates to main package
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+  # Updates to TS examples
+  - package-ecosystem: "npm"
+    directory: "examples/typescript"
     schedule:
       interval: "daily"
 
