@@ -1,4 +1,4 @@
-[![Logo](logo)](repo)
+[![Logo][logo]][repo]
 
 [![node-current](https://img.shields.io/node/v/dropbox)](https://www.npmjs.com/package/dropbox)
 [![npm](https://img.shields.io/npm/v/dropbox)](https://www.npmjs.com/package/dropbox)
@@ -32,7 +32,7 @@ You can also view our [OAuth guide][oauthguide].
 
 ## Examples
 
-We provide [Examples][examples] to help get you started with a lot of the basic functionality in the SDK.
+We provide [Examples][examples] to help get you started with a lot of the basic functionality in the SDK.  We provide most examples in both Javascript and Typescript with some having a Node equivalent.
 
 - **OAuth**
     - Auth - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/typescript/auth), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript/auth) ] - A simple auth example to get an access token and list the files in the root of your Dropbox account.
@@ -56,7 +56,7 @@ If you need help that is not specific to this SDK, please reach out to [Dropbox 
 
 This SDK is distributed under the MIT license, please see [LICENSE][license] for more information.
 
-[logo]: logo
+[logo]: https://cfl.dropboxstatic.com/static/images/sdk/javascript_banner.png
 [repo]: https://github.com/dropbox/dropbox-sdk-js
 [documentation]: https://dropbox.github.io/dropbox-sdk-js/
 [examples]: https://github.com/dropbox/dropbox-sdk-js/tree/master/examples
