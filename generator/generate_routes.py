@@ -103,7 +103,7 @@ def main():
     subprocess.check_output(
         (['python', '-m', 'stone.cli', 'tsd_client', typescript_template_path] +
          specs + ['-a', 'host', '-a', 'style'] +
-         ['--', 'dropbox.d.tstemplate', 'dropbox.d.ts']),
+         ['--', 'index.d.tstemplate', 'index.d.ts']),
         cwd=stone_path)
 
     typescript_generated_files = glob.glob('typescript/*.d.ts')

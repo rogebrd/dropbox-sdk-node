@@ -6,7 +6,7 @@
  * and to perform a basic sanity check that types are exported as intended.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var Dropbox = require("../../types/dropbox"); // eslint-disable-line
+var Dropbox = require("../../types/index"); // eslint-disable-line
 // Check DropboxAuth Constructor and Methods
 // Test default constructor
 var dropboxAuth = new Dropbox.DropboxAuth();
