@@ -5,7 +5,7 @@
  * and to perform a basic sanity check that types are exported as intended.
  */
 
-import * as Dropbox from '../../types/dropbox'; // eslint-disable-line
+import * as Dropbox from '../../types/index'; // eslint-disable-line
 
 // Check DropboxAuth Constructor and Methods
 // Test default constructor
