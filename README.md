@@ -1,3 +1,7 @@
+# :warning: This Repository is Archived.  Please refer to the official [Dropbox Javascript SDK][repo] for current versions. :warning:
+## This SDK was originally created by [Brad Rogers](https://github.com/rogebrd) and [Andrew Lawson](https://github.com/aelawson) as a Dropbox Hackweek project.  It has since been merged into the official [Dropbox Javascript SDK][repo].  Please refer to that SDK for any issues, updates, and new features.
+
+
 [![Logo][logo]][repo]
 
 [![node-current](https://img.shields.io/node/v/dropbox)](https://www.npmjs.com/package/dropbox)
